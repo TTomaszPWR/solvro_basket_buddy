@@ -1,8 +1,8 @@
 
 import 'package:flutter/material.dart';
-import 'package:solvro_basket_buddy/utils/components/auth_button.dart';
-import 'package:solvro_basket_buddy/utils/components/auth_text_field.dart';
-import 'package:solvro_basket_buddy/utils/components/password_text_field.dart';
+import 'package:solvro_basket_buddy/auth/components/auth_button.dart';
+import 'package:solvro_basket_buddy/auth/components/auth_text_field.dart';
+import 'package:solvro_basket_buddy/auth/components/password_text_field.dart';
 
 class AuthScreenTemplate extends StatelessWidget {
 

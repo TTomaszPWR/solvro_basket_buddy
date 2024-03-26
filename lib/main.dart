@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:solvro_basket_buddy/pages/login_screen.dart';
-import 'package:solvro_basket_buddy/pages/register_screen.dart';
+import 'package:solvro_basket_buddy/auth/pages/login_screen.dart';
+import 'package:solvro_basket_buddy/auth/pages/register_screen.dart';
 
 void main() {
   runApp(const MyApp());

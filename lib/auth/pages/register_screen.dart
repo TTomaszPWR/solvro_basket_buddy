@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:solvro_basket_buddy/pages/auth_screen_template.dart';
+import 'package:solvro_basket_buddy/auth/pages/auth_screen_template.dart';
 
 
 class RegisterScreen extends StatelessWidget {

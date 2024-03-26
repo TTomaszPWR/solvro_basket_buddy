@@ -1,17 +1,17 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
-class LoginModel {
+class AuthModel {
   final String email;
   final String password;
 
-  LoginModel({
+  AuthModel({
     required this.email,
     required this.password,
   });
 
-  factory LoginModel.fromJson(Map<String, dynamic> json) {
-    return LoginModel(
+  factory AuthModel.fromJson(Map<String, dynamic> json) {
+    return AuthModel(
       email: json['email'],
       password: json['password'],
     );
@@ -22,11 +22,11 @@ class LoginModel {
     'password': password,
   };
 
-  LoginModel copyWith({
+  AuthModel copyWith({
     String? email,
     String? password,
   }) {
-    return LoginModel(
+    return AuthModel(
       email: email ?? this.email,
       password: password ?? this.password,
     );
@@ -39,8 +39,8 @@ class LoginModel {
     };
   }
 
-  factory LoginModel.fromMap(Map<String, dynamic> map) {
-    return LoginModel(
+  factory AuthModel.fromMap(Map<String, dynamic> map) {
+    return AuthModel(
       email: map['email'] as String,
       password: map['password'] as String,
     );
@@ -48,13 +48,13 @@ class LoginModel {
 
   String toJsonString() => json.encode(toMap());
 
-  factory LoginModel.fromJsonString(String source) => LoginModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory AuthModel.fromJsonString(String source) => AuthModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() => 'LoginModel(email: $email, password: $password)';
 
   @override
-  bool operator ==(covariant LoginModel other) {
+  bool operator ==(covariant AuthModel other) {
     if (identical(this, other)) return true;
   
     return 

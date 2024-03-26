@@ -10,6 +10,21 @@ final class AuthInitialState extends AuthState {}
 
 final class AuthLoadingState extends AuthState {}
 
-final class AuthErrorState extends AuthState {}
+final class AuthErrorState extends AuthState {
+  final String message;
 
-final class LoginState extends AuthState {}
+  AuthErrorState(this.message);
+ 
+  @override
+  List<Object?> get props => [message];
+}
+
+final class LoggedState extends AuthState {
+  final TokenModel token;
+
+  LoggedState(this.token);
+ 
+  @override
+  List<Object?> get props => [token];
+
+}
