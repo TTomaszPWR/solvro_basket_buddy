@@ -1,26 +1,42 @@
 import 'package:flutter/material.dart';
 
-class AuthTextField extends StatelessWidget {
+class PasswordTextField extends StatefulWidget {
   final TextEditingController? controller;
   final String hintText;
 
-  const AuthTextField({
+  const PasswordTextField({
     super.key,
     this.controller,
     this.hintText = 'Enter your text',
   });
 
+  @override
+  State<PasswordTextField> createState() => _PasswordTextFieldState();
+}
+
+class _PasswordTextFieldState extends State<PasswordTextField> {
+  bool _isPasswordVisible = false;
+  
+  void _togglePasswordVisibility() {
+    setState(() {
+      _isPasswordVisible = !_isPasswordVisible;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 25),
       child: TextField(
-        
-        controller: controller,
+        controller: widget.controller,
+        obscureText: !_isPasswordVisible,
         cursorColor: Colors.grey.shade600,
         decoration: InputDecoration(
-          hintText: hintText,
+          suffixIcon: IconButton(
+            icon:Icon(_isPasswordVisible? Icons.visibility_off : Icons.visibility),
+            onPressed: _togglePasswordVisibility,
+          ),
+          hintText: widget.hintText,
           enabledBorder: const OutlineInputBorder(
             borderSide: BorderSide(color: Colors.white)
           ),
