@@ -1,6 +1,10 @@
+import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:solvro_basket_buddy/auth/bloc/auth_bloc.dart';
 import 'package:solvro_basket_buddy/auth/pages/login_screen.dart';
 import 'package:solvro_basket_buddy/auth/pages/register_screen.dart';
+import 'package:solvro_basket_buddy/shopping_lists/pages/home_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,10 +18,14 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      initialRoute: '/login',
+      home: BlocProvider(
+        create: (context) => AuthBloc(AuthInitialState()),
+        child: const LoginScreen(),
+      ),
       routes: {
         '/login': (context) => const LoginScreen(),
         '/register': (context) => const RegisterScreen(),
+        '/home': (context) => const Home(),
       },
     );
   }

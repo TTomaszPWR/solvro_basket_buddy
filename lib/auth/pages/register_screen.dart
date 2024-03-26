@@ -13,7 +13,10 @@ class RegisterScreen extends StatelessWidget {
       buttonText: "Register now", 
       bottomText: "You have an account?", 
       bottomTextAction: "Sign in now",
-      bottomTextActionOnTap:() => Navigator.pop(context)
+      authButtonOnTap: () {},
+      bottomTextActionOnTap:() => Navigator.pop(context),
+      emailController: TextEditingController(),
+      passwordController: TextEditingController(),
     );
   }
 }

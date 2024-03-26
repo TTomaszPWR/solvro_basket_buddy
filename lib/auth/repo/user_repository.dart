@@ -24,6 +24,5 @@ class UserRepository{
 
     return TokenModel.fromJson(json.decode(response));
   }
-
-
+  
 }

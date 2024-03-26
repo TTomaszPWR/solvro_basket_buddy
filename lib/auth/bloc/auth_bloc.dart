@@ -14,6 +14,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       try {
         var token = await UserRepository.login(event.email, event.password);
         emit(LoggedState(token));
+        print(token.toString());
       } catch (e) {
         emit(AuthErrorState(e.toString()));
       }
@@ -28,6 +29,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(AuthErrorState(e.toString()));
       }
     });
+
+    
   }
 
 }

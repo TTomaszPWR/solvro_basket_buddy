@@ -11,8 +11,8 @@ class AuthScreenTemplate extends StatelessWidget {
   final String buttonText;
   final String bottomText;
   final String bottomTextAction;
-  final TextEditingController? emailController;
-  final TextEditingController? passwordController;
+  final TextEditingController emailController;
+  final TextEditingController passwordController;
   final Function()? authButtonOnTap;
   final Function()? bottomTextActionOnTap;
 
@@ -23,8 +23,8 @@ class AuthScreenTemplate extends StatelessWidget {
     required this.buttonText,
     required this.bottomText, 
     required this.bottomTextAction, 
-    this.emailController, 
-    this.passwordController, 
+    required this.emailController, 
+    required this.passwordController, 
     this.authButtonOnTap, 
     this.bottomTextActionOnTap,
   });

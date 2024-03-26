@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 class AuthTextField extends StatelessWidget {
-  final TextEditingController? controller;
+  final TextEditingController controller;
   final String hintText;
 
   const AuthTextField({
     super.key,
-    this.controller,
+    required this.controller,
     this.hintText = 'Enter your text',
   });
 

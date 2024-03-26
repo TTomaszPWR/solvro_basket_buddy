@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 class PasswordTextField extends StatefulWidget {
-  final TextEditingController? controller;
+  final TextEditingController controller;
   final String hintText;
 
   const PasswordTextField({
     super.key,
-    this.controller,
+    required this.controller,
     this.hintText = 'Enter your text',
   });
 
