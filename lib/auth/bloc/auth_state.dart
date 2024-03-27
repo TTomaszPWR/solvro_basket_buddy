@@ -27,4 +27,11 @@ final class LoggedState extends AuthState {
   @override
   List<Object?> get props => [token];
 
+  @override
+  String toString() {
+    return super.toString();
+  }
+
 }
+final class LoggedOutState extends AuthState {}
+

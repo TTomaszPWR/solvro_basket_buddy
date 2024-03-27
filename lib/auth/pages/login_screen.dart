@@ -7,14 +7,14 @@ import 'package:solvro_basket_buddy/auth/pages/auth_screen_template.dart';
 
 class LoginScreen extends StatelessWidget {
 
-  const LoginScreen({super.key});
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  
+  LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     final AuthBloc authBloc = BlocProvider.of<AuthBloc>(context);
-
-    TextEditingController emailController = TextEditingController();
-    TextEditingController passwordController = TextEditingController();
 
     return AuthScreenTemplate(
       icon: Icons.lock, 
@@ -22,7 +22,7 @@ class LoginScreen extends StatelessWidget {
       buttonText: "Sign in", 
       bottomText: "Don't have an account?", 
       bottomTextAction: "Register now",
-      authButtonOnTap: (){ 
+      authButtonOnTap: () { 
         authBloc.add(AuthLoginEvent(emailController.text, passwordController.text));
         Navigator.pushNamed(context, '/home');
       },

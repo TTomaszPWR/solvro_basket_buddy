@@ -27,4 +27,11 @@ class AuthRegisterEvent extends AuthEvent {
   List<Object?> get props => [email, password];
 }
 
-class AuthLogoutEvent extends AuthEvent {}
+class AuthLogoutEvent extends AuthEvent {
+  final TokenModel token;
+
+  AuthLogoutEvent(this.token);
+
+  @override
+  List<Object?> get props => [token];
+}

@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:solvro_basket_buddy/api/base_client.dart';
 import 'package:solvro_basket_buddy/auth/model/auth_model.dart';
 import 'package:solvro_basket_buddy/auth/model/token_model.dart';
-
+import 'package:http/http.dart' as http;
 
 class UserRepository{
   static Future<TokenModel> login(String email, String password) async {
@@ -23,6 +23,21 @@ class UserRepository{
     var response = await BaseClient().post('auth/signup/', object).catchError((error) => print(error));
 
     return TokenModel.fromJson(json.decode(response));
+  }
+
+  static Future<void> logout(TokenModel token) async {
+    var client = http.Client();
+    var url = Uri.parse('${baseUrl}auth/logout/');
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Token ${token.token}'
+    };
+    var response = await client.post(url, headers: headers);
+    if(response.statusCode >= 200 && response.statusCode < 300){
+      return ;
+    }else{
+      //throw Exception('Failed to post data');
+    }
   }
   
 }
