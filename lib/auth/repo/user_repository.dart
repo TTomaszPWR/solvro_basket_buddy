@@ -7,26 +7,38 @@ import 'package:solvro_basket_buddy/auth/model/token_model.dart';
 import 'package:http/http.dart' as http;
 
 class UserRepository{
-  static Future<TokenModel> login(String email, String password) async {
-    var object = AuthModel(email: email, password: password);
+  var client = http.Client();
 
-    var response = await BaseClient().post('auth/login/', object).catchError((error) => print(error));
+  Future<TokenModel> login(String email, String password) async {
+    var url = Uri.parse('${baseUrl}auth/login/');
 
-    var token = TokenModel.fromJson(json.decode(response));
+    var authModel = AuthModel(email: email, password: password);
+    var payload = jsonEncode(authModel);
+    var headers = {
+      'Content-Type': 'application/json'
+    };
 
+    var response = await client.post(url, headers: headers, body: payload);
+    var token = TokenModel.fromJson(json.decode(response.body));
     return token;
   }
 
-  static Future<TokenModel> register(String email, String password) async {
-    var object = AuthModel(email: email, password: password);
+  Future<TokenModel> register(String email, String password) async {
+    var url = Uri.parse('${baseUrl}auth/signup/');
 
-    var response = await BaseClient().post('auth/signup/', object).catchError((error) => print(error));
+    var authModel = AuthModel(email: email, password: password);
+    var payload = jsonEncode(authModel);
+    var headers = {
+      'Content-Type': 'application/json'
+    };
 
-    return TokenModel.fromJson(json.decode(response));
+    var response = await client.post(url, headers: headers, body: payload);
+    var token = TokenModel.fromJson(json.decode(response.body));
+    print(token.toString());
+    return token;
   }
 
-  static Future<void> logout(TokenModel token) async {
-    var client = http.Client();
+  Future<void> logout(TokenModel token) async {
     var url = Uri.parse('${baseUrl}auth/logout/');
     var headers = {
       'Content-Type': 'application/json',

@@ -11,6 +11,11 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+
+  void _logout(){
+    BlocProvider.of<AuthBloc>(context).add(AuthLogoutEvent(BlocProvider.of<AuthBloc>(context).state.props[0] as TokenModel));
+    Navigator.pushNamed(context, '/login');
+  }
   
   @override
   Widget build(BuildContext context) {
@@ -21,10 +26,7 @@ class _HomeState extends State<Home> {
         actions: [
           IconButton(
             icon: const Icon(Icons.logout),
-            onPressed: () {
-              BlocProvider.of<AuthBloc>(context).add(AuthLogoutEvent(BlocProvider.of<AuthBloc>(context).state.props[0] as TokenModel));
-              Navigator.pushNamed(context, '/login');
-            },
+            onPressed: _logout,
           ),
         ],
       ),
@@ -40,7 +42,6 @@ class _HomeState extends State<Home> {
             );
           }
         },
-      
         child:  const Center(
           child: Text('Moje Listy'),
         ),

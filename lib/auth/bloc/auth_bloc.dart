@@ -8,11 +8,14 @@ part 'auth_event.dart';
 part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  AuthBloc() : super(AuthInitialState()){
+
+  final UserRepository _userRepository;
+
+  AuthBloc(this._userRepository) : super(LoggedOutState()){
     on<AuthLoginEvent>((event, emit) async {
       emit(AuthLoadingState());
       try {
-        var token = await UserRepository.login(event.email, event.password);
+        final token = await _userRepository.login(event.email, event.password);
         emit(LoggedState(token));
         
       } catch (e) {
@@ -21,27 +24,26 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       print(state.toString());
     });
 
-    /*on<AuthRegisterEvent>((event, emit) async {
+    on<AuthRegisterEvent>((event, emit) async {
       emit(AuthLoadingState());
       try {
-        var token = await UserRepository.register(event.email, event.password);
+        var token = await _userRepository.register(event.email, event.password);
         emit(LoggedState(token));
       } catch (e) {
         emit(AuthErrorState(e.toString()));
       }
-    });*/
+      print(state.toString());
+    });
 
     on<AuthLogoutEvent>((event, emit) async {
       emit(AuthLoadingState());
       try {
-        await UserRepository.logout(event.token);
+        await _userRepository.logout(event.token);
         emit(LoggedOutState());
       } catch (e) {
         emit(AuthErrorState(e.toString()));
       }
+      print(state.toString());
     });
-
-    
   }
-
 }

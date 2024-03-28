@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 const String baseUrl = 'https://basket-buddy-solvro-api.kowalinski.dev/api/v1/';
 
 class BaseClient{
-  var client = http.Client();
+  /*var client = http.Client();
 
   Future<dynamic> get(String api, String token) async {
     var url = Uri.parse(baseUrl + api);
@@ -36,5 +36,5 @@ class BaseClient{
 
   Future<dynamic> put(String api) async {}
 
-  Future<dynamic> delete(String api) async {}
+  Future<dynamic> delete(String api) async {}*/
 }
