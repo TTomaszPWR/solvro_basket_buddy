@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:solvro_basket_buddy/products/model/product_model.dart';
 import 'package:solvro_basket_buddy/shopping_lists/model/unitEnum.dart';
 
-class ListItemModel {
+class ShoppingItemModel {
   int id;
   ProductModel product;
   int productId;
@@ -13,7 +13,7 @@ class ListItemModel {
   bool isBought;
 
   
-  ListItemModel({
+  ShoppingItemModel({
     required this.id,
     required this.product,
     required this.productId,
@@ -22,8 +22,12 @@ class ListItemModel {
     required this.isBought,
   });
 
+  String get name => name;
 
-  ListItemModel copyWith({
+  String get description => description;
+
+
+  ShoppingItemModel copyWith({
     int? id,
     ProductModel? product,
     int? productId,
@@ -31,7 +35,7 @@ class ListItemModel {
     Unit? unit,
     bool? isBought,
   }) {
-    return ListItemModel(
+    return ShoppingItemModel(
       id: id ?? this.id,
       product: product ?? this.product,
       productId: productId ?? this.productId,
@@ -52,8 +56,8 @@ class ListItemModel {
     };
   }
 
-  factory ListItemModel.fromMap(Map<String, dynamic> map) {
-    return ListItemModel(
+  factory ShoppingItemModel.fromMap(Map<String, dynamic> map) {
+    return ShoppingItemModel(
       id: map['id'] as int,
       product: ProductModel.fromMap(map['product'] as Map<String,dynamic>),
       productId: map['productId'] as int,
@@ -65,7 +69,7 @@ class ListItemModel {
 
   String toJson() => json.encode(toMap());
 
-  factory ListItemModel.fromJson(String source) => ListItemModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory ShoppingItemModel.fromJson(String source) => ShoppingItemModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {
@@ -73,7 +77,7 @@ class ListItemModel {
   }
 
   @override
-  bool operator ==(covariant ListItemModel other) {
+  bool operator ==(covariant ShoppingItemModel other) {
     if (identical(this, other)) return true;
   
     return 

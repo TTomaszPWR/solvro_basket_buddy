@@ -5,6 +5,7 @@ import 'package:solvro_basket_buddy/api/base_client.dart';
 import 'package:solvro_basket_buddy/auth/model/auth_model.dart';
 import 'package:solvro_basket_buddy/auth/model/token_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:solvro_basket_buddy/auth/model/wrong_credentials_exception.dart';
 
 class UserRepository{
   var client = http.Client();
@@ -19,8 +20,13 @@ class UserRepository{
     };
 
     var response = await client.post(url, headers: headers, body: payload);
-    var token = TokenModel.fromJson(json.decode(response.body));
-    return token;
+    if(response.statusCode >= 200 && response.statusCode < 300){
+      var token = TokenModel.fromJson(json.decode(response.body));
+      print(token.toString());
+      return token;
+    }else{
+      throw WrongCredentialsException();
+    }
   }
 
   Future<TokenModel> register(String email, String password) async {
@@ -33,9 +39,13 @@ class UserRepository{
     };
 
     var response = await client.post(url, headers: headers, body: payload);
-    var token = TokenModel.fromJson(json.decode(response.body));
-    print(token.toString());
-    return token;
+    if(response.statusCode >= 200 && response.statusCode < 300){
+      var token = TokenModel.fromJson(json.decode(response.body));
+      print(token.toString());
+      return token;
+    }else{
+      throw WrongCredentialsException();
+    }
   }
 
   Future<void> logout(TokenModel token) async {
@@ -48,7 +58,7 @@ class UserRepository{
     if(response.statusCode >= 200 && response.statusCode < 300){
       return ;
     }else{
-      //throw Exception('Failed to post data');
+      throw Exception('Failed to post data');
     }
   }
   

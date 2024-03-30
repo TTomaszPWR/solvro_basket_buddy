@@ -25,8 +25,7 @@ class RegisterScreen extends StatelessWidget {
         ),
       );
     }else {
-      BlocProvider.of<AuthBloc>(context).add(AuthRegisterEvent(emailController.text, passwordController1.text));
-      Navigator.pushNamed(context, '/home');
+      BlocProvider.of<AuthBloc>(context).add(RegisterEvent(emailController.text, passwordController1.text));
     }
   }
 
@@ -37,9 +36,9 @@ class RegisterScreen extends StatelessWidget {
       backgroundColor: Colors.grey[300],
       extendBodyBehindAppBar: true,
       resizeToAvoidBottomInset: false,
-      body: BlocListener<AuthBloc,AuthState>(
+      body: BlocConsumer<AuthBloc,AuthState>(
         listener: (context, state) { 
-          if (state is LoggedOutState) {
+          if (state is LoggedOut) {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
                 content: Text('Logged out successfully'),
@@ -47,81 +46,100 @@ class RegisterScreen extends StatelessWidget {
               ),
             );
           }
+          else if (state is LoggedIn) {
+            Navigator.pushNamed(context, '/home');
+          }
+          else if (state is AuthError) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(state.props[0] as String),
+                duration: Duration(seconds: 3),
+              ),
+            );
+          }
          },
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Icon(
-                Icons.lock,
-                size: 120,
-              ),
-        
-              const SizedBox(height: 45),
-        
-              Text(
-                "Hello! Welcome to Application.",
-                style: TextStyle(
-                  fontSize: 15,
-                  color: Colors.grey[700],
-                ),
-              ),
-              
-              const SizedBox(height: 15),
-        
-              AuthTextField(
-                hintText: 'Email',
-                controller: emailController,
-              ),
-        
-              const SizedBox(height: 10),
-        
-              PasswordTextField(
-                hintText: 'Password',
-                controller: passwordController1,
-              ),
-      
-              const SizedBox(height: 10),
-      
-              PasswordTextField(
-                hintText: 'Repeat Password',
-                controller: passwordController2,
-              ),
-        
-              const SizedBox(height: 35),
-        
-              AuthButton(
-                text: "Register now",
-                onTap:() => register(context),
-              ),
-        
-              const SizedBox(height: 7),
-        
-              Row(
+        builder:(context, state) {
+          if (state is AuthLoading || state is LoggedIn) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }else {
+            return Center(
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  const Icon(
+                    Icons.lock,
+                    size: 120,
+                  ),
+            
+                  const SizedBox(height: 45),
+            
                   Text(
-                    "Do you have an account?",
+                    "Hello! Welcome to Application.",
                     style: TextStyle(
-                      color: Colors.grey.shade600,
+                      fontSize: 15,
+                      color: Colors.grey[700],
                     ),
                   ),
-                  const SizedBox(width: 5),
-                  GestureDetector(
-                    onTap: () => Navigator.pop(context),
-                    child: const Text(
-                      "Sign in now",
-                      style: TextStyle(
-                        color: Colors.blue,
-                        fontWeight: FontWeight.bold,
+                  
+                  const SizedBox(height: 15),
+            
+                  AuthTextField(
+                    hintText: 'Email',
+                    controller: emailController,
+                  ),
+            
+                  const SizedBox(height: 10),
+            
+                  PasswordTextField(
+                    hintText: 'Password',
+                    controller: passwordController1,
+                  ),
+          
+                  const SizedBox(height: 10),
+          
+                  PasswordTextField(
+                    hintText: 'Repeat Password',
+                    controller: passwordController2,
+                  ),
+            
+                  const SizedBox(height: 35),
+            
+                  AuthButton(
+                    text: "Register now",
+                    onTap:() => register(context),
+                  ),
+            
+                  const SizedBox(height: 7),
+            
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Do you have an account?",
+                        style: TextStyle(
+                          color: Colors.grey.shade600,
+                        ),
                       ),
-                    ),
-                  ),
+                      const SizedBox(width: 5),
+                      GestureDetector(
+                        onTap: () => Navigator.pop(context),
+                        child: const Text(
+                          "Sign in now",
+                          style: TextStyle(
+                            color: Colors.blue,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
                 ],
               )
-            ],
-          )
-        ),
+            );
+          }
+        }
       ),
     );
   }

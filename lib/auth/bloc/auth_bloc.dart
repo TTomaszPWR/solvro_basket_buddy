@@ -11,37 +11,36 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   final UserRepository _userRepository;
 
-  AuthBloc(this._userRepository) : super(LoggedOutState()){
-    on<AuthLoginEvent>((event, emit) async {
-      emit(AuthLoadingState());
+  AuthBloc(this._userRepository) : super(LoggedOut()){
+    on<LoginEvent>((event, emit) async {
+      emit(AuthLoading());
       try {
         final token = await _userRepository.login(event.email, event.password);
-        emit(LoggedState(token));
-        
+        emit(LoggedIn(token));
       } catch (e) {
-        emit(AuthErrorState(e.toString()));
+        emit(AuthError(e.toString()));
       }
       print(state.toString());
     });
 
-    on<AuthRegisterEvent>((event, emit) async {
-      emit(AuthLoadingState());
+    on<RegisterEvent>((event, emit) async {
+      emit(AuthLoading());
       try {
         var token = await _userRepository.register(event.email, event.password);
-        emit(LoggedState(token));
+        emit(LoggedIn(token));
       } catch (e) {
-        emit(AuthErrorState(e.toString()));
+        emit(AuthError(e.toString()));
       }
       print(state.toString());
     });
 
-    on<AuthLogoutEvent>((event, emit) async {
-      emit(AuthLoadingState());
+    on<LogoutEvent>((event, emit) async {
+      emit(AuthLoading());
       try {
         await _userRepository.logout(event.token);
-        emit(LoggedOutState());
+        emit(LoggedOut());
       } catch (e) {
-        emit(AuthErrorState(e.toString()));
+        emit(AuthError(e.toString()));
       }
       print(state.toString());
     });
