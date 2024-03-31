@@ -4,6 +4,7 @@ import 'package:solvro_basket_buddy/auth/bloc/auth_bloc.dart';
 import 'package:solvro_basket_buddy/auth/components/auth_button.dart';
 import 'package:solvro_basket_buddy/auth/components/auth_text_field.dart';
 import 'package:solvro_basket_buddy/auth/components/password_text_field.dart';
+import 'package:solvro_basket_buddy/shopping_lists/bloc/shopping_lists_bloc.dart';
 
 class LoginScreen extends StatelessWidget {
 
@@ -37,12 +38,19 @@ class LoginScreen extends StatelessWidget {
             }
             else if (state is LoggedIn) {
               Navigator.pushNamed(context, '/home');
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Zalogowano się poprawnie'),
+                  duration: Duration(seconds: 2),
+                ),
+              );
+              BlocProvider.of<ShoppingListsBloc>(context).add(FetchShoppingLists(state.token));
             }
             else if (state is AuthError) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(state.props[0] as String),
-                  duration: Duration(seconds: 3),
+                  duration: const Duration(seconds: 3),
                 ),
               );
             }

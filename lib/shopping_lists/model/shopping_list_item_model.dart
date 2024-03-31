@@ -7,8 +7,7 @@ import 'package:solvro_basket_buddy/shopping_lists/model/unitEnum.dart';
 class ShoppingItemModel {
   int id;
   ProductModel product;
-  int productId;
-  int quantity;
+  double quantity;
   Unit unit;
   bool isBought;
 
@@ -16,7 +15,6 @@ class ShoppingItemModel {
   ShoppingItemModel({
     required this.id,
     required this.product,
-    required this.productId,
     required this.quantity,
     required this.unit,
     required this.isBought,
@@ -31,14 +29,13 @@ class ShoppingItemModel {
     int? id,
     ProductModel? product,
     int? productId,
-    int? quantity,
+    double? quantity,
     Unit? unit,
     bool? isBought,
   }) {
     return ShoppingItemModel(
       id: id ?? this.id,
       product: product ?? this.product,
-      productId: productId ?? this.productId,
       quantity: quantity ?? this.quantity,
       unit: unit ?? this.unit,
       isBought: isBought ?? this.isBought,
@@ -49,7 +46,6 @@ class ShoppingItemModel {
     return <String, dynamic>{
       'id': id,
       'product': product.toMap(),
-      'productId': productId,
       'quantity': quantity,
       'unit': unit.toMap(),
       'isBought': isBought,
@@ -60,9 +56,8 @@ class ShoppingItemModel {
     return ShoppingItemModel(
       id: map['id'] as int,
       product: ProductModel.fromMap(map['product'] as Map<String,dynamic>),
-      productId: map['productId'] as int,
-      quantity: map['quantity'] as int,
-      unit: Unit.fromMap(map['unit'] as Map<String,dynamic>),
+      quantity: map['quantity'] as double,
+      unit: Unit.fromString(map['unit'] as String),
       isBought: map['isBought'] as bool,
     );
   }
@@ -73,7 +68,7 @@ class ShoppingItemModel {
 
   @override
   String toString() {
-    return 'ListItemModel(id: $id, product: $product, productId: $productId, quantity: $quantity, unit: $unit, isBought: $isBought)';
+    return 'ListItemModel(id: $id, product: $product, quantity: $quantity, unit: $unit, isBought: $isBought)';
   }
 
   @override
@@ -83,7 +78,6 @@ class ShoppingItemModel {
     return 
       other.id == id &&
       other.product == product &&
-      other.productId == productId &&
       other.quantity == quantity &&
       other.unit == unit &&
       other.isBought == isBought;
@@ -93,7 +87,6 @@ class ShoppingItemModel {
   int get hashCode {
     return id.hashCode ^
       product.hashCode ^
-      productId.hashCode ^
       quantity.hashCode ^
       unit.hashCode ^
       isBought.hashCode;

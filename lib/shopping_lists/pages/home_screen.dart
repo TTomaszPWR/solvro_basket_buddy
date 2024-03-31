@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:solvro_basket_buddy/auth/bloc/auth_bloc.dart';
 import 'package:solvro_basket_buddy/auth/model/token_model.dart';
 import 'package:solvro_basket_buddy/shopping_lists/bloc/shopping_lists_bloc.dart';
+import 'package:solvro_basket_buddy/shopping_lists/components/Shopping_tile.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -25,7 +26,14 @@ class _HomeState extends State<Home> {
       canPop: false,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Moje listy'),
+          title: Text(
+            'Moje listy',
+            style: TextStyle(
+              color: Colors.grey[700],
+              fontSize: 30,
+              fontWeight: FontWeight.bold,
+            )
+          ),
           automaticallyImplyLeading: false,
           actions: [
             IconButton(
@@ -33,42 +41,30 @@ class _HomeState extends State<Home> {
               onPressed: _logout,
             ),
           ],
+          backgroundColor: Colors.grey[300],
         ),
+        backgroundColor: Colors.grey[300],
       
-        body:BlocListener<AuthBloc, AuthState>(
-          listener: (context, state) {
-            if (state is LoggedIn) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Zalogowano się poprawnie'),
-                  duration: Duration(seconds: 2),
-                ),
-              );
-            }
-          },
-          child: Center(
-            child: BlocBuilder<ShoppingListsBloc, ShoppingListsState>(
-              builder: (context, state) {
-                if (state is ShoppingListsLoading) {
-                  return const CircularProgressIndicator();
-                }else if (state is ShoppingListsLoaded){
-                  return ListView.builder(
-                    itemCount: state.shoppingLists.length,
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                        title: Text(state.shoppingLists[index].name),
-                      );
-                    },
-
-                    //Todo
-                  );
-                }else if (state is ShoppingListsLoadingError){
-                  return const Text('Wystąpił błąd podczas ładowania listy zakupów');
-                }else {
-                  return const Text('Listy niezaładowane');
-                }
-              },
-            ),
+        body:Center(
+          child: BlocBuilder<ShoppingListsBloc, ShoppingListsState>(
+            builder: (context, state) {
+              if (state is ShoppingListsLoading) {
+                return const CircularProgressIndicator();
+              }else if (state is ShoppingListsLoaded){
+                return ListView.builder(
+                  
+                  itemCount: state.shoppingLists.length,
+                  itemBuilder: (context, index) {
+                    return ShoppingTile(index: index);
+                  },
+                  //Todo
+                );
+              }else if (state is ShoppingListsLoadingError){
+                return const Text('Wystąpił błąd podczas ładowania listy zakupów');
+              }else {
+                return const Text('Listy niezaładowane');
+              }
+            },
           ),
         ),
       ),
