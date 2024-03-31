@@ -28,14 +28,3 @@ class ShoppingListsLoadingError extends ShoppingListsState {
 }
 
 class ShoppingListsNotLoaded extends ShoppingListsState {}
-
-class ShoppingItemLoading extends ShoppingListsState {}
-
-class ShoppingItemLoaded extends ShoppingListsState {
-  final ShoppingItemModel item;
-
-  const ShoppingItemLoaded(this.item);
-
-  @override
-  List<Object> get props => [item];
-}

@@ -29,16 +29,5 @@ class ShoppingListsBloc extends Bloc<ShoppingListsEvent, ShoppingListsState> {
       
       print(state.props);
     });
-
-    on<GetItem>((event, emit) async {
-      emit(ShoppingItemLoading());
-      try {
-        final item = await _shoppingListsRepository.getItem(event.token, event.itemId, event.listId);
-        emit(ShoppingItemLoaded(item));
-      } catch (e) {
-        emit(ShoppingListsLoadingError(e.toString()));
-      }
-      print(state.props);
-    });
   }
 }

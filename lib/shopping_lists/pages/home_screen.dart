@@ -37,6 +37,10 @@ class _HomeState extends State<Home> {
           automaticallyImplyLeading: false,
           actions: [
             IconButton(
+              onPressed: (){},
+              icon: const Icon(Icons.delete_forever)
+            ),
+            IconButton(
               icon: const Icon(Icons.logout),
               onPressed: _logout,
             ),
@@ -52,12 +56,10 @@ class _HomeState extends State<Home> {
                 return const CircularProgressIndicator();
               }else if (state is ShoppingListsLoaded){
                 return ListView.builder(
-                  
                   itemCount: state.shoppingLists.length,
                   itemBuilder: (context, index) {
                     return ShoppingTile(index: index);
                   },
-                  //Todo
                 );
               }else if (state is ShoppingListsLoadingError){
                 return const Text('Wystąpił błąd podczas ładowania listy zakupów');

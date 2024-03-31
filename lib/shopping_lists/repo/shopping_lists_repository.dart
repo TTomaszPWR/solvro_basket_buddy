@@ -9,20 +9,22 @@ import 'package:solvro_basket_buddy/shopping_lists/model/shopping_list_model.dar
 class ShoppingListsRepository {
   var client = http.Client();
 
-  Future<List<ShoppingListModel>> fetch(TokenModel token) async {
-    var url = Uri.parse('${baseUrl}shopping-lists/');
+  Future<http.Response> _sendRequest(String path, TokenModel token) async {
+    var url = Uri.parse('${baseUrl}$path');
     var headers = {
       'Authorization': 'Token ${token.token}'
     };
-    var response = await client.get(url, headers: headers);
+    return await client.get(url, headers: headers);
+  }
+
+  Future<List<ShoppingListModel>> fetch(TokenModel token) async {
+    var response = await _sendRequest('shopping-lists/', token);
 
     print(response.body);
 
-    
     if(response.statusCode >= 200 && response.statusCode < 300){
       List<dynamic> body = jsonDecode(response.body);
       List<ShoppingListModel> shoppingLists = body.map((dynamic item) => ShoppingListModel.fromMap(item)).toList();
-      
 
       shoppingLists.forEach((element) {
         print(element.name);
@@ -30,27 +32,26 @@ class ShoppingListsRepository {
 
       return shoppingLists;
     }else{
-      throw Exception('Failed to load shopping lists');
+          throw http.ClientException('Failed to load shopping lists');
+        }
+      }
+
+      Future<ShoppingItemModel> getItem(TokenModel token, int listId, int itemId,) async {
+        var response = await _sendRequest('shopping-lists/$listId/items/$itemId/', token);
+
+        print(response.body);
+
+        if(response.statusCode >= 200 && response.statusCode < 300){
+          var body = jsonDecode(response.body);
+          var item = ShoppingItemModel.fromMap(body);
+
+          return item;
+        }else{
+          throw http.ClientException('Failed to load item');
     }
   }
 
-  Future<ShoppingItemModel> getItem(TokenModel token, int listId, int itemId,) async {
-    var url = Uri.parse('${baseUrl}shopping-lists/$listId/items/$itemId/');
-    var headers = {
-      'Authorization': 'Token ${token.token}'
-    };
-
-    var response = await client.get(url, headers: headers);
-
-    print(response.body);
-
-    if(response.statusCode >= 200 && response.statusCode < 300){
-      var body = jsonDecode(response.body);
-      var item = ShoppingItemModel.fromMap(body);
-      
-      return item;
-    }else{
-      throw Exception('Failed to load item');
-    }
+  void dispose() {
+    client.close();
   }
 }

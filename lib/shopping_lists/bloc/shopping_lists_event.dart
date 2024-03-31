@@ -16,13 +16,3 @@ class FetchShoppingLists extends ShoppingListsEvent {
   List<Object> get props => [token];
 }
 
-class GetItem extends ShoppingListsEvent {
-  final TokenModel token;
-  final int itemId;
-  final int listId;
-
-  const GetItem(this.token, this.itemId, this.listId);
-
-  @override
-  List<Object> get props => [token, itemId, listId];
-}

@@ -114,8 +114,12 @@ class ShoppingListModel {
   }
   
   double calcBoughtRatio() {
-    double ratio = _calcBoughtItems() / items.length;
-    return ratio;
+    if (items.isEmpty) {
+      return 0;
+    }else{
+      double ratio = _calcBoughtItems() / items.length;
+      return ratio;
+    }
   }
 
   String getProgress(){
