@@ -7,13 +7,29 @@ import 'package:solvro_basket_buddy/auth/components/password_text_field.dart';
 import 'package:solvro_basket_buddy/shopping_lists/bloc/shopping_lists_bloc.dart';
 
 
-class RegisterScreen extends StatelessWidget {
+class RegisterScreen extends StatefulWidget {
 
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController1 = TextEditingController();
-  final TextEditingController passwordController2 = TextEditingController();
-  
+
   RegisterScreen({super.key});
+
+  @override
+  State<RegisterScreen> createState() => _RegisterScreenState();
+}
+
+class _RegisterScreenState extends State<RegisterScreen> {
+  final TextEditingController emailController = TextEditingController();
+
+  final TextEditingController passwordController1 = TextEditingController();
+
+  final TextEditingController passwordController2 = TextEditingController();
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController1.dispose();
+    passwordController2.dispose();
+    super.dispose();
+  }
 
   void register(BuildContext context) {
     FocusManager.instance.primaryFocus?.unfocus();
@@ -28,7 +44,6 @@ class RegisterScreen extends StatelessWidget {
       BlocProvider.of<AuthBloc>(context).add(RegisterEvent(emailController.text, passwordController1.text));
     }
   }
-
 
   @override
   Widget build(BuildContext context) {

@@ -6,18 +6,31 @@ import 'package:solvro_basket_buddy/auth/components/auth_text_field.dart';
 import 'package:solvro_basket_buddy/auth/components/password_text_field.dart';
 import 'package:solvro_basket_buddy/shopping_lists/bloc/shopping_lists_bloc.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
 
+
+  const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController emailController = TextEditingController();
+
   final TextEditingController passwordController = TextEditingController();
-  
-  LoginScreen({super.key});
 
   void login(BuildContext context) {
     FocusManager.instance.primaryFocus?.unfocus();
     BlocProvider.of<AuthBloc>(context).add(LoginEvent(emailController.text, passwordController.text));
   }
 
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
