@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:solvro_basket_buddy/shopping_lists/bloc/shopping_lists_bloc.dart';
 
@@ -80,29 +78,28 @@ class ShoppingTile extends StatelessWidget {
                             size: 28,
                           )
                         ),
-                    ],
-                  ),
-                  Row(
-                     children: [
-                       Expanded(
-                           child: LinearProgressIndicator(
-                           value: state.shoppingLists[index]
-                               .calcBoughtRatio(),
-                           color: Colors.green[400],
-                           backgroundColor: getColor(state.shoppingLists[index].color, 100),
-                           borderRadius: BorderRadius.circular(6),
-                           minHeight: 13,
-                         )),
-                         const SizedBox(width: 20),
-                         Text(state.shoppingLists[index].getProgress(),
-                             style: TextStyle(
-                               fontSize: 20,
-                               color: Colors.grey[800],
-                               fontWeight: FontWeight.bold,
-                             )),
-                         const SizedBox(width: 20),
-                       ],
-                     ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                      Expanded(
+                          child: LinearProgressIndicator(
+                          value: state.shoppingLists[index].calcBoughtRatio(),
+                          color: Colors.green[400],
+                          backgroundColor: getColor(state.shoppingLists[index].color, 100),
+                          borderRadius: BorderRadius.circular(6),
+                          minHeight: 13,
+                        )),
+                        const SizedBox(width: 20),
+                        Text(state.shoppingLists[index].getProgress(),
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.grey[800],
+                              fontWeight: FontWeight.bold,
+                            )),
+                        const SizedBox(width: 20),
+                      ],
+                    ),
                   ],
                 )
               )

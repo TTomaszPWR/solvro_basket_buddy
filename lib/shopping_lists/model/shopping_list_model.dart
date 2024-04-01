@@ -1,6 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
-import 'dart:ffi';
 
 import 'package:flutter/foundation.dart';
 
@@ -105,11 +104,11 @@ class ShoppingListModel {
 
   int _calcBoughtItems() {
     int bought = 0;
-    items.forEach((element) {
+    for (var element in items) {
       if (element.isBought) {
         bought++;
       }
-    });
+    }
     return bought;
   }
   

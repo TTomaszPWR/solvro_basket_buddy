@@ -21,9 +21,9 @@ class ProductRepository {
       List<dynamic> body = jsonDecode(response.body);
       List<ProductModel> products = body.map((dynamic item) => ProductModel.fromMap(item)).toList();
       
-      products.forEach((element) {
+      for (var element in products) {
         print(element.name);
-      });
+      }
       return products;
     }else{
       throw Exception('Failed to load products');

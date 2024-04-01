@@ -22,9 +22,9 @@ class ProductCategoryRepository {
       List<dynamic> body = jsonDecode(response.body);
       List<ProductCategoryModel> productCategories = body.map((dynamic item) => ProductCategoryModel.fromMap(item)).toList();
       
-      productCategories.forEach((element) {
+      for (var element in productCategories) {
         print(element.name);
-      });
+      }
       return productCategories;
     }else{
       throw Exception('Failed to load product categories');

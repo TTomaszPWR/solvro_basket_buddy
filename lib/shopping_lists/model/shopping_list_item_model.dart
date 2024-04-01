@@ -20,11 +20,7 @@ class ShoppingItemModel {
     required this.isBought,
   });
 
-  String get name => name;
-
-  String get description => description;
-
-
+  
   ShoppingItemModel copyWith({
     int? id,
     ProductModel? product,

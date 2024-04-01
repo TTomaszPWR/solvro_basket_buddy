@@ -4,7 +4,6 @@ import 'package:solvro_basket_buddy/auth/bloc/auth_bloc.dart';
 import 'package:solvro_basket_buddy/auth/components/auth_button.dart';
 import 'package:solvro_basket_buddy/auth/components/auth_text_field.dart';
 import 'package:solvro_basket_buddy/auth/components/password_text_field.dart';
-import 'package:solvro_basket_buddy/auth/pages/login_screen.dart';
 import 'package:solvro_basket_buddy/shopping_lists/bloc/shopping_lists_bloc.dart';
 
 
@@ -61,7 +60,7 @@ class RegisterScreen extends StatelessWidget {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(state.props[0] as String),
-                duration: Duration(seconds: 3),
+                duration: const Duration(seconds: 3),
               ),
             );
           }

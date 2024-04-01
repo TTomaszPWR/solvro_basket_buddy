@@ -1,11 +1,7 @@
-import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:solvro_basket_buddy/auth/model/token_model.dart';
-import 'package:solvro_basket_buddy/product_category/repo/product_category_repository.dart';
-import 'package:solvro_basket_buddy/products/repo/product_repository.dart';
-import 'package:solvro_basket_buddy/shopping_lists/model/shopping_list_item_model.dart';
 import 'package:solvro_basket_buddy/shopping_lists/model/shopping_list_model.dart';
 import 'package:solvro_basket_buddy/shopping_lists/repo/shopping_lists_repository.dart';
 
