@@ -4,6 +4,10 @@ import 'package:solvro_basket_buddy/auth/bloc/auth_bloc.dart';
 import 'package:solvro_basket_buddy/auth/pages/login_screen.dart';
 import 'package:solvro_basket_buddy/auth/pages/register_screen.dart';
 import 'package:solvro_basket_buddy/auth/repo/user_repository.dart';
+import 'package:solvro_basket_buddy/product_category/bloc/product_category_bloc.dart';
+import 'package:solvro_basket_buddy/product_category/repo/product_category_repository.dart';
+import 'package:solvro_basket_buddy/products/bloc/product_bloc.dart';
+import 'package:solvro_basket_buddy/products/repo/product_repository.dart';
 import 'package:solvro_basket_buddy/shopping_lists/bloc/shopping_lists_bloc.dart';
 import 'package:solvro_basket_buddy/shopping_lists/pages/home_screen.dart';
 import 'package:solvro_basket_buddy/shopping_lists/repo/shopping_lists_repository.dart';
@@ -25,6 +29,15 @@ class MyApp extends StatelessWidget {
         RepositoryProvider(
           create: (context) => UserRepository(),
         ),
+        RepositoryProvider(
+          create:(context) => ProductCategoryRepository()
+        ),
+        RepositoryProvider(
+          create:(context) => ProductCategoryRepository()
+        ),
+        RepositoryProvider(
+          create: (context) => ProductRepository()
+        )
       ],
       child: MultiBlocProvider(
         providers: [
@@ -38,13 +51,23 @@ class MyApp extends StatelessWidget {
               RepositoryProvider.of<ShoppingListsRepository>(context),
             ),
           ),
+          BlocProvider(
+            create: (context) => ProductCategoryBloc(
+              RepositoryProvider.of<ProductCategoryRepository>(context),
+            ),
+          ),
+          BlocProvider(
+            create: (context) => ProductBloc(
+              RepositoryProvider.of<ProductRepository>(context),
+            ),
+          ),
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Flutter Demo',
           initialRoute: '/login',
           routes: {
-            '/login': (context) => LoginScreen(),
+            '/login': (context) => const LoginScreen(),
             '/register': (context) => RegisterScreen(),
             '/home': (context) => const Home(),
           },
