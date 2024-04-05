@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:solvro_basket_buddy/auth/bloc/auth_bloc.dart';
 import 'package:solvro_basket_buddy/auth/model/token_model.dart';
 import 'package:solvro_basket_buddy/shopping_lists/bloc/shopping_lists_bloc.dart';
-import 'package:solvro_basket_buddy/shopping_lists/components/Shopping_tile.dart';
+import 'package:solvro_basket_buddy/shopping_lists/components/shopping_tile.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -47,6 +47,15 @@ class _HomeState extends State<Home> {
           ],
           backgroundColor: Colors.grey[300],
         ),
+
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            BlocProvider.of<ShoppingListsBloc>(context).add(AddShoppingList(BlocProvider.of<AuthBloc>(context).state.props[0] as TokenModel, 'Nowa lista', 'red', '🛒'));
+          },
+          backgroundColor: Colors.grey[700],
+          child: const Icon(Icons.add),
+        ),
+
         backgroundColor: Colors.grey[300],
       
         body:Center(

@@ -12,14 +12,9 @@ class UserRepository{
 
   Future<TokenModel> login(String email, String password) async {
     var url = Uri.parse('${baseUrl}auth/login/');
-
-    var authModel = AuthModel(email: email, password: password);
-    var payload = jsonEncode(authModel);
-    var headers = {
-      'Content-Type': 'application/json'
-    };
-
-    var response = await client.post(url, headers: headers, body: payload);
+    var body = AuthModel(email: email, password: password).toJson();
+    
+    var response = await client.post(url, body: body);
     if(response.statusCode >= 200 && response.statusCode < 300){
       var token = TokenModel.fromJson(json.decode(response.body));
       print(token.toString());
@@ -31,14 +26,15 @@ class UserRepository{
 
   Future<TokenModel> register(String email, String password) async {
     var url = Uri.parse('${baseUrl}auth/signup/');
-
-    var authModel = AuthModel(email: email, password: password);
-    var payload = jsonEncode(authModel);
+    var body = {
+      'email': email,
+      'password': password
+    };
     var headers = {
       'Content-Type': 'application/json'
     };
 
-    var response = await client.post(url, headers: headers, body: payload);
+    var response = await client.post(url, headers: headers, body: body);
     if(response.statusCode >= 200 && response.statusCode < 300){
       var token = TokenModel.fromJson(json.decode(response.body));
       print(token.toString());

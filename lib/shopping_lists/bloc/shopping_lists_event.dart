@@ -16,3 +16,15 @@ class FetchShoppingLists extends ShoppingListsEvent {
   List<Object> get props => [token];
 }
 
+class AddShoppingList extends ShoppingListsEvent {
+  final TokenModel token;
+  final String name;
+  final String color;
+  final String emoji;
+
+  const AddShoppingList(this.token, this.name, this.color, this.emoji);
+
+  @override
+  List<Object> get props => [token];
+}
+

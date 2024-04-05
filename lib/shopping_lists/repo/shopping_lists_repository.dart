@@ -71,8 +71,27 @@ class ShoppingListsRepository {
       return;
     }else{
       throw http.ClientException('Failed to delete list');
+    } 
+  }
+
+  Future<ShoppingListModel> addList(TokenModel token, String name, String color, String emoji) async {
+    var url = Uri.parse('${baseUrl}shopping-lists/');
+    var headers = {
+      'Authorization': 'Token ${token.token}'
+    };
+    var body = {
+      "name": name,
+      "color": color,
+      "emoji": emoji,
+      "isActive": 'true'
+    };
+    var response = await client.post(url, headers: headers, body: body);
+    print(response.body);
+    if(response.statusCode >= 200 && response.statusCode < 300){
+      return ShoppingListModel.fromJson(response.body);
+    }else{
+      throw http.ClientException('Failed to add list');
     }
-    
   }
 
   void dispose() {

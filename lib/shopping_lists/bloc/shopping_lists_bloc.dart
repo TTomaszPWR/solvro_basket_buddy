@@ -14,7 +14,6 @@ class ShoppingListsBloc extends Bloc<ShoppingListsEvent, ShoppingListsState> {
   ShoppingListsBloc(this._shoppingListsRepository) : super(ShoppingListsNotLoaded()) {
 
     on<FetchShoppingLists>((event, emit) async {
-      
       emit(ShoppingListsLoading());
       try {
         final shoppingLists = await _shoppingListsRepository.fetch(event.token);
@@ -25,5 +24,16 @@ class ShoppingListsBloc extends Bloc<ShoppingListsEvent, ShoppingListsState> {
       
       print(state.props);
     });
+
+    on<AddShoppingList>((event, emit) async {
+      final shoppingLists = List<ShoppingListModel>.from((state as ShoppingListsLoaded).shoppingLists);
+
+      emit(ShoppingListsLoading());
+      shoppingLists.add(await _shoppingListsRepository.addList(event.token, event.name, event.color, event.emoji));
+
+      emit(ShoppingListsLoaded(shoppingLists));
+
+    });
+
   }
 }

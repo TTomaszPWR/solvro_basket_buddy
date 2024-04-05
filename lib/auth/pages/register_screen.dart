@@ -10,7 +10,7 @@ import 'package:solvro_basket_buddy/shopping_lists/bloc/shopping_lists_bloc.dart
 class RegisterScreen extends StatefulWidget {
 
 
-  RegisterScreen({super.key});
+  const RegisterScreen({super.key});
 
   @override
   State<RegisterScreen> createState() => _RegisterScreenState();
