@@ -26,9 +26,9 @@ class ShoppingListsRepository {
       List<dynamic> body = jsonDecode(response.body);
       List<ShoppingListModel> shoppingLists = body.map((dynamic item) => ShoppingListModel.fromMap(item)).toList();
 
-      shoppingLists.forEach((element) {
+      for (var element in shoppingLists) {
         print(element.name);
-      });
+      }
 
       return shoppingLists;
     }else{

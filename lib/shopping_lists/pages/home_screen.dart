@@ -50,7 +50,7 @@ class _HomeState extends State<Home> {
 
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            BlocProvider.of<ShoppingListsBloc>(context).add(AddShoppingList(BlocProvider.of<AuthBloc>(context).state.props[0] as TokenModel, 'Nowa lista', 'red', '🛒'));
+            Navigator.pushNamed(context, '/add_list');
           },
           backgroundColor: Colors.grey[700],
           child: const Icon(Icons.add),
