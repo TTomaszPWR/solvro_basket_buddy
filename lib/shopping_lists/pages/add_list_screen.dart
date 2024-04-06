@@ -19,7 +19,7 @@ class _AddListScreenState extends State<AddListScreen> {
 
   final TextEditingController controller = TextEditingController();
 
-  final List<bool> _selections = List.generate(3, (_) => false);
+  final List<bool> _selections = [true,false,false];
 
   String getColor(){
     for(int i=0;i<_selections.length; i++){

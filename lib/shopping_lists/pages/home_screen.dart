@@ -14,6 +14,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
 
+
   void _logout(){
     BlocProvider.of<AuthBloc>(context).add(LogoutEvent(BlocProvider.of<AuthBloc>(context).state.props[0] as TokenModel));
     Navigator.pushNamed(context, '/login');
@@ -21,6 +22,8 @@ class _HomeState extends State<Home> {
   
   @override
   Widget build(BuildContext context) {
+    final ShoppingListsBloc shoppingListsBloc = BlocProvider.of<ShoppingListsBloc>(context);
+    final AuthBloc authBloc = BlocProvider.of<AuthBloc>(context);
 
     return PopScope(
       canPop: false,

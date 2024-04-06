@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:solvro_basket_buddy/auth/components/auth_button.dart';
+import 'package:solvro_basket_buddy/auth/bloc/auth_bloc.dart';
 import 'package:solvro_basket_buddy/auth/components/auth_text_field.dart';
+import 'package:solvro_basket_buddy/auth/model/token_model.dart';
 import 'package:solvro_basket_buddy/shopping_lists/bloc/shopping_lists_bloc.dart';
+import 'package:solvro_basket_buddy/shopping_lists/components/change_bottom_sheet.dart';
 import 'package:solvro_basket_buddy/shopping_lists/components/color_buttons.dart';
 import 'package:solvro_basket_buddy/shopping_lists/components/more_options_tile.dart';
 
 class ShoppingTile extends StatelessWidget {
   final int index;
   final TextEditingController changeNameController = TextEditingController();
-  final List<bool> _selections = List.generate(3, (_) => false);
+  final List<bool> _selections = [true,false,false];
 
 
   ShoppingTile({super.key, required this.index});
@@ -40,7 +42,7 @@ class ShoppingTile extends StatelessWidget {
     throw Error();
   }
 
-  void moreOptions(BuildContext context) {
+  void moreOptions(BuildContext context, ShoppingListsBloc shoppingListsBloc, AuthBloc authBloc) {
     showModalBottomSheet(
       isScrollControlled: true,
       backgroundColor: Colors.grey[300],
@@ -56,19 +58,19 @@ class ShoppingTile extends StatelessWidget {
                   text: 'Zmień nazwę', 
                   color: Colors.grey[800], 
                   icon: Icons.draw, 
-                  onTap:() => changeName(context)
+                  onTap:() => changeName(context, shoppingListsBloc, authBloc)
                 ),
                 MoreOptionsTile(
                   text: 'Zmień kolor', 
                   color: Colors.grey[800], 
                   icon: Icons.color_lens, 
-                  onTap: () => changeColor(context)
+                  onTap: () => changeColor(context, shoppingListsBloc, authBloc)
                 ),
                 MoreOptionsTile(
                   text: 'Usuń listę', 
                   color: Colors.red, 
                   icon: Icons.delete, 
-                  onTap: deleteList
+                  onTap:() => deleteList(context, shoppingListsBloc, authBloc)
                 ),
               ],
             ),
@@ -78,83 +80,57 @@ class ShoppingTile extends StatelessWidget {
     );
   }
 
-  void changeName(BuildContext context){
+  void changeName(BuildContext context, ShoppingListsBloc shoppingListsBloc, AuthBloc authBloc){
     Navigator.pop(context);
-    showModalBottomSheet(
-      isScrollControlled: true,
-      backgroundColor: Colors.grey[300],
-      context: context,
-      builder: (context) {
-        return Wrap(
-          children: [Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 20),
-            child: Column(
-              children: [
-                Text(
-                  'Zmień nazwę listy',
-                  style: TextStyle(
-                    fontSize: 25,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.grey[800]
-                  ),
-                ),
-                const SizedBox(height: 20,),
-
-                AuthTextField(hintText: 'Wprowadź nazwę listy', controller: changeNameController),
-
-                const SizedBox(height: 20,),
-
-                AuthButton(text: 'Zapisz', onTap: () {},),
-              ],
-            ),
-          ),]
-        );
-      },
+    changeBottomSheet(
+      context,
+      'Zmień nazwę listy',
+      AuthTextField(hintText: 'Wprowadź nazwę listy', controller: changeNameController),
+      () {
+        final list = shoppingListsBloc.state.shoppingLists[index];
+        shoppingListsBloc.add(UpdateShoppingList(
+          authBloc.state.props[0] as TokenModel,
+          list.id,
+          changeNameController.text,
+          list.color,
+          list.emoji,
+          list.isActive
+        ));
+      }
     );
   }
   
-    void changeColor(BuildContext context){
+  void changeColor(BuildContext context, ShoppingListsBloc shoppingListsBloc, AuthBloc authBloc){
     Navigator.pop(context);
-    showModalBottomSheet(
-      isScrollControlled: true,
-      backgroundColor: Colors.grey[300],
-      context: context,
-      builder: (context) {
-        return Wrap(
-          children: [Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 20),
-            child: Column(
-              children: [
-                Text(
-                  'Zmień kolor listy',
-                  style: TextStyle(
-                    fontSize: 25,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.grey[800]
-                  ),
-                ),
-                const SizedBox(height: 20,),
-
-                ColorButtons(selections: _selections),
-
-                const SizedBox(height: 20,),
-
-                AuthButton(text: 'Zapisz', onTap: () {},),
-              ],
-            ),
-          ),]
-        );
-      },
+    changeBottomSheet(
+      context,
+      'Zmień kolor listy',
+      ColorButtons(selections: _selections),
+      () {
+        final list = shoppingListsBloc.state.shoppingLists[index];
+        shoppingListsBloc.add(UpdateShoppingList(
+          authBloc.state.props[0] as TokenModel,
+          list.id,
+          list.name,
+          getStringColor(),
+          list.emoji,
+          list.isActive
+        ));
+      }
     );
   }
-
-  void deleteList(){
-
+  
+  void deleteList(BuildContext context, ShoppingListsBloc shoppingListsBloc, AuthBloc authBloc){
+    shoppingListsBloc.add(DeleteShoppingList(authBloc.state.props[0] as TokenModel, shoppingListsBloc.state.shoppingLists[index].id));
+    Navigator.pop(context);
   }
 
 
   @override
   Widget build(BuildContext context) {
+    final ShoppingListsBloc shoppingListsBloc = BlocProvider.of<ShoppingListsBloc>(context);
+    final AuthBloc authBloc = BlocProvider.of<AuthBloc>(context);
+
     return Padding(
       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
       child: BlocBuilder<ShoppingListsBloc, ShoppingListsState>(
@@ -184,7 +160,7 @@ class ShoppingTile extends StatelessWidget {
                           ),
                         ),
                         IconButton(
-                          onPressed: () => moreOptions(context),
+                          onPressed: () => moreOptions(context, shoppingListsBloc, authBloc),
                           icon: Icon(
                             Icons.more_vert,
                             color: Colors.grey[800],
