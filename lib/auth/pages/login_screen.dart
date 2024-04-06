@@ -20,9 +20,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
   final TextEditingController passwordController = TextEditingController();
 
-  void login(BuildContext context) {
+  void login(BuildContext context, AuthBloc authBloc) {
     FocusManager.instance.primaryFocus?.unfocus();
-    BlocProvider.of<AuthBloc>(context).add(LoginEvent(emailController.text, passwordController.text));
+    authBloc.add(LoginEvent(emailController.text, passwordController.text));
   }
 
   @override
@@ -34,6 +34,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final AuthBloc authBloc = BlocProvider.of<AuthBloc>(context);
+    final ShoppingListsBloc shoppingListsBloc = BlocProvider.of<ShoppingListsBloc>(context);
+
     return PopScope(
       canPop: false,
       child: Scaffold(
@@ -57,7 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   duration: Duration(seconds: 2),
                 ),
               );
-              BlocProvider.of<ShoppingListsBloc>(context).add(FetchShoppingLists(state.token));
+              shoppingListsBloc.add(FetchShoppingLists(state.token));
             }
             else if (state is AuthError) {
               ScaffoldMessenger.of(context).showSnackBar(
@@ -112,7 +115,7 @@ class _LoginScreenState extends State<LoginScreen> {
               
                     AuthButton(
                       text: "Sign in",
-                      onTap:() => login(context),
+                      onTap:() => login(context, authBloc),
                     ),
               
                     const SizedBox(height: 7),

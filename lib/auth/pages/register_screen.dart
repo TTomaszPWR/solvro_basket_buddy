@@ -31,7 +31,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     super.dispose();
   }
 
-  void register(BuildContext context) {
+  void register(BuildContext context, AuthBloc authBloc) {
     FocusManager.instance.primaryFocus?.unfocus();
     if(passwordController1.text != passwordController2.text){
       ScaffoldMessenger.of(context).showSnackBar(
@@ -47,6 +47,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final AuthBloc authBloc = BlocProvider.of<AuthBloc>(context);
+    final ShoppingListsBloc shoppingListsBloc = BlocProvider.of<ShoppingListsBloc>(context);
+
     return Scaffold(
       backgroundColor: Colors.grey[300],
       extendBodyBehindAppBar: true,
@@ -69,7 +72,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   duration: Duration(seconds: 2),
                 ),
               );
-              BlocProvider.of<ShoppingListsBloc>(context).add(FetchShoppingLists(state.token));
+              shoppingListsBloc.add(FetchShoppingLists(state.token));
           }
           else if (state is AuthError) {
             ScaffoldMessenger.of(context).showSnackBar(
@@ -130,7 +133,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             
                   AuthButton(
                     text: "Register now",
-                    onTap:() => register(context),
+                    onTap:() => register(context, authBloc),
                   ),
             
                   const SizedBox(height: 7),
