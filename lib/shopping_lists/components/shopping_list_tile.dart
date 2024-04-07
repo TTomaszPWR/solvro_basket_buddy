@@ -8,13 +8,13 @@ import 'package:solvro_basket_buddy/shopping_lists/components/change_bottom_shee
 import 'package:solvro_basket_buddy/shopping_lists/components/color_buttons.dart';
 import 'package:solvro_basket_buddy/shopping_lists/components/more_options_tile.dart';
 
-class ShoppingTile extends StatelessWidget {
+class ShoppingListTile extends StatelessWidget {
   final int index;
   final TextEditingController changeNameController = TextEditingController();
   final List<bool> _selections = [true,false,false];
 
 
-  ShoppingTile({super.key, required this.index});
+  ShoppingListTile({super.key, required this.index});
 
   Color getColor(String color, int shade) {
     switch (color) {
@@ -136,62 +136,65 @@ class ShoppingTile extends StatelessWidget {
       child: BlocBuilder<ShoppingListsBloc, ShoppingListsState>(
         builder: (context, state) {
           if (state is ShoppingListsLoaded) {
-            return Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                border: Border.all(color: getColor(state.shoppingLists[index].color, 400), width: 2),
-                borderRadius: BorderRadius.circular(10),
-                color: getColor(state.shoppingLists[index].color, 200),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.only(top: 10, left: 20, bottom: 10),
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            state.shoppingLists[index].name,
-                            style: TextStyle(
-                              fontSize: 28,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.grey[800],
+            return GestureDetector(
+              onTap: () => Navigator.pushNamed(context, '/list', arguments: index),
+              child: Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  border: Border.all(color: getColor(state.shoppingLists[index].color, 400), width: 2),
+                  borderRadius: BorderRadius.circular(10),
+                  color: getColor(state.shoppingLists[index].color, 200),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 10, left: 20, bottom: 10),
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              state.shoppingLists[index].name,
+                              style: TextStyle(
+                                fontSize: 28,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey[800],
+                              ),
                             ),
                           ),
-                        ),
-                        IconButton(
-                          onPressed: () => moreOptions(context, shoppingListsBloc, authBloc),
-                          icon: Icon(
-                            Icons.more_vert,
-                            color: Colors.grey[800],
-                            size: 28,
-                          )
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                      Expanded(
-                          child: LinearProgressIndicator(
-                          value: state.shoppingLists[index].calcBoughtRatio(),
-                          color: Colors.green[400],
-                          backgroundColor: getColor(state.shoppingLists[index].color, 100),
-                          borderRadius: BorderRadius.circular(6),
-                          minHeight: 13,
-                        )),
-                        const SizedBox(width: 20),
-                        Text(state.shoppingLists[index].getProgress(),
-                            style: TextStyle(
-                              fontSize: 20,
+                          IconButton(
+                            onPressed: () => moreOptions(context, shoppingListsBloc, authBloc),
+                            icon: Icon(
+                              Icons.more_vert,
                               color: Colors.grey[800],
-                              fontWeight: FontWeight.bold,
-                            )),
-                        const SizedBox(width: 20),
-                      ],
-                    ),
-                  ],
+                              size: 28,
+                            )
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                        Expanded(
+                            child: LinearProgressIndicator(
+                            value: state.shoppingLists[index].calcBoughtRatio(),
+                            color: Colors.green[400],
+                            backgroundColor: getColor(state.shoppingLists[index].color, 100),
+                            borderRadius: BorderRadius.circular(6),
+                            minHeight: 13,
+                          )),
+                          const SizedBox(width: 20),
+                          Text(state.shoppingLists[index].getProgress(),
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.grey[800],
+                                fontWeight: FontWeight.bold,
+                              )),
+                          const SizedBox(width: 20),
+                        ],
+                      ),
+                    ],
+                  )
                 )
-              )
+              ),
             );
           }else {
             return const Text('Listy niezaładowane');

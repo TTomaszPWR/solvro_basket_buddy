@@ -1,8 +1,11 @@
 
+import 'dart:math';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:solvro_basket_buddy/auth/model/token_model.dart';
 import 'package:solvro_basket_buddy/shopping_lists/model/shopping_list_model.dart';
+import 'package:solvro_basket_buddy/shopping_lists/model/unitEnum.dart';
 import 'package:solvro_basket_buddy/shopping_lists/repo/shopping_lists_repository.dart';
 
 part 'shopping_lists_event.dart';
@@ -58,6 +61,19 @@ class ShoppingListsBloc extends Bloc<ShoppingListsEvent, ShoppingListsState> {
       shoppingLists.firstWhere((element) => element.id == event.listId).isActive = event.isActive;
 
       emit(ShoppingListsLoaded(shoppingLists));
+    });
+
+    on<UpdateShoppingItem>((event, emit) async {
+      final shoppingLists = List<ShoppingListModel>.from((state as ShoppingListsLoaded).shoppingLists);
+
+      emit(ShoppingListsLoading());
+      await _shoppingListsRepository.updateItem(event.token, event.listId, event.itemId, event.productId, event.quantity, event.unit, event.isBought);
+
+      shoppingLists.firstWhere((element) => element.id == event.listId).items.firstWhere((element) => element.id == event.itemId).isBought = event.isBought;
+
+
+      emit(ShoppingListsLoaded(shoppingLists));
+
     });
 
   }

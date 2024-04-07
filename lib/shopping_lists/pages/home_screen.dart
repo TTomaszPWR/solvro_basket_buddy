@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:solvro_basket_buddy/auth/bloc/auth_bloc.dart';
 import 'package:solvro_basket_buddy/auth/model/token_model.dart';
 import 'package:solvro_basket_buddy/shopping_lists/bloc/shopping_lists_bloc.dart';
-import 'package:solvro_basket_buddy/shopping_lists/components/shopping_tile.dart';
+import 'package:solvro_basket_buddy/shopping_lists/components/shopping_list_tile.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -70,7 +70,7 @@ class _HomeState extends State<Home> {
                 return ListView.builder(
                   itemCount: state.shoppingLists.length,
                   itemBuilder: (context, index) {
-                    return ShoppingTile(index: index);
+                    return ShoppingListTile(index: index);
                   },
                 );
               }else if (state is ShoppingListsLoadingError){

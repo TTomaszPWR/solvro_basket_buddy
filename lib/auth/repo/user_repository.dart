@@ -16,7 +16,7 @@ class UserRepository{
     
     var response = await client.post(url, body: body);
     if(response.statusCode >= 200 && response.statusCode < 300){
-      var token = TokenModel.fromJson(json.decode(response.body));
+      var token = TokenModel.fromJson(json.decode(utf8.decode(response.bodyBytes)));
       print(token.toString());
       return token;
     }else{
@@ -36,7 +36,7 @@ class UserRepository{
 
     var response = await client.post(url, headers: headers, body: body);
     if(response.statusCode >= 200 && response.statusCode < 300){
-      var token = TokenModel.fromJson(json.decode(response.body));
+      var token = TokenModel.fromJson(json.decode(utf8.decode(response.bodyBytes)));
       print(token.toString());
       return token;
     }else{
@@ -57,5 +57,4 @@ class UserRepository{
       throw Exception('Failed to post data');
     }
   }
-  
 }
