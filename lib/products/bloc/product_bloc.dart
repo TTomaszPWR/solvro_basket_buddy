@@ -10,15 +10,16 @@ part 'product_state.dart';
 class ProductBloc extends Bloc<ProductEvent, ProductState> {
   final ProductRepository _productRepository;
   
-  ProductBloc(this._productRepository) : super(ProductInitial()) {
-    on<FetchProducts>((event, emit) {
+  ProductBloc(this._productRepository) : super(ProductInitial())  {
+    on<FetchProducts>((event, emit) async {
       emit(ProductLoading());
       try{
-        List<ProductModel> products = _productRepository.fetch(event.token) as List<ProductModel>;
+        List<ProductModel> products =  await _productRepository.fetch(event.token);
         emit(ProductLoaded(products));
       }catch(e){
         emit(ProductError(e.toString()));
       }
+
     });
   }
 }

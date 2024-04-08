@@ -50,4 +50,15 @@ enum Unit{
       default: return 'PIECES';
     }
   }
+
+  String toShortString() {
+    switch(this){
+      case Unit.PIECES: return 'szt';
+      case Unit.KILOGRAM: return 'kg';
+      case Unit.GRAM: return 'g';
+      case Unit.LITER: return 'l';
+      case Unit.METER: return 'm';
+      default: return 'szt';
+    }
+  }
 }

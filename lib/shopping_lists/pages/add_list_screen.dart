@@ -78,7 +78,7 @@ class _AddListScreenState extends State<AddListScreen> {
                     controller: controller,
                   ),
 
-                  const SizedBox(height: 20), // Add this line
+                  const SizedBox(height: 20),
 
                   ColorButtons(selections: _selections)
                 ]

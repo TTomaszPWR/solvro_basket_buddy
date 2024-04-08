@@ -10,6 +10,7 @@ class ProductRepository {
   var client = http.Client();
 
   Future<List<ProductModel>> fetch(TokenModel token) async {
+    
     var url = Uri.parse('${baseUrl}products/');
     var headers = {
       'Authorization': 'Token ${token.token}'
@@ -18,12 +19,9 @@ class ProductRepository {
     var response = await client.get(url, headers: headers);
 
     if(response.statusCode >= 200 && response.statusCode < 300){
-      List<dynamic> body = jsonDecode(response.body);
+      List<dynamic> body = jsonDecode(utf8.decode(response.bodyBytes));
       List<ProductModel> products = body.map((dynamic item) => ProductModel.fromMap(item)).toList();
       
-      for (var element in products) {
-        print(element.name);
-      }
       return products;
     }else{
       throw Exception('Failed to load products');

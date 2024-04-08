@@ -21,7 +21,7 @@ class _ShoppingListItemState extends State<ShoppingListItem> {
 
   void toggleBought(ShoppingListModel list, ShoppingItemModel item, ShoppingListsBloc shoppingbloc, AuthBloc authBloc) {
     setState(() {
-      shoppingbloc.add(UpdateShoppingItem( (authBloc.state as LoggedIn).token, list.id, item.id, !item.isBought,  item.product.id, item.quantity, item.unit));
+      shoppingbloc.add(UpdateShoppingItem((authBloc.state as LoggedIn).token, list.id, item.id, !item.isBought,  item.product.id, item.quantity, item.unit));
     });
   }
 
@@ -37,12 +37,19 @@ class _ShoppingListItemState extends State<ShoppingListItem> {
     final ShoppingListModel shoppingList = list[listIndex];
     final item = shoppingList.items[itemIndex];
 
-    return ListTile(
-      leading: IconButton(
-        icon: Icon(item.isBought ? Icons.check_box : Icons.check_box_outline_blank),
-        onPressed: () => toggleBought(shoppingList, item, shoppingbloc, authBloc),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 0),
+      child: ListTile(
+        leading: IconButton(
+          icon: Icon(
+            item.isBought ? Icons.check_circle : Icons.circle_outlined,
+            color: item.isBought ? Colors.green : Colors.grey
+          ),
+          onPressed: () => toggleBought(shoppingList, item, shoppingbloc, authBloc),
+        ),
+        title: Text(item.product.name),
+        subtitle: Text('${item.quantity % 1 == 0 ? item.quantity.toInt() : item.quantity} ${item.unit.toShortString()}'),
       ),
-      title: Text(item.product.name),
     );
   }
 }

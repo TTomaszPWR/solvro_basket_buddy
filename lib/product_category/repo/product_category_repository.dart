@@ -17,18 +17,18 @@ class ProductCategoryRepository {
     var response = await client.get(url, headers: headers);
 
 
-
+    print(response.body);
     if(response.statusCode >= 200 && response.statusCode < 300){
-      List<dynamic> body = jsonDecode(response.body);
+      List<dynamic> body = jsonDecode(utf8.decode(response.bodyBytes));
       List<ProductCategoryModel> productCategories = body.map((dynamic item) => ProductCategoryModel.fromMap(item)).toList();
+
       
-      for (var element in productCategories) {
-        print(element.name);
-      }
       return productCategories;
     }else{
+      
       throw Exception('Failed to load product categories');
     }
+
 
   }
 }

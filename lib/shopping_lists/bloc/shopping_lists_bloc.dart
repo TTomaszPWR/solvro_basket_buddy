@@ -75,6 +75,5 @@ class ShoppingListsBloc extends Bloc<ShoppingListsEvent, ShoppingListsState> {
       emit(ShoppingListsLoaded(shoppingLists));
 
     });
-
   }
 }
