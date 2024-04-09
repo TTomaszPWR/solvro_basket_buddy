@@ -131,6 +131,26 @@ class ShoppingListsRepository {
     }
   }
 
+  Future<ShoppingItemModel> addItem(TokenModel token, int listId, int productId, double quantity, Unit unit) async {
+    var url = Uri.parse('${baseUrl}shopping-lists/$listId/items/');
+    var headers = {
+      'Authorization': 'Token ${token.token}'
+    };
+    var body = {
+      "product_id": productId.toString(),
+      "quantity": quantity.toString(),
+      "unit": unit.toString(),
+      "isBought": 'false'
+    };
+    var response = await client.post(url, headers: headers, body: body);
+    print(response.body);
+    if(response.statusCode >= 200 && response.statusCode < 300){
+      return ShoppingItemModel.fromJson(utf8.decode(response.bodyBytes));
+    }else{
+      throw http.ClientException('Failed to add item');
+    }
+  }
+
   void dispose() {
     client.close();
   }

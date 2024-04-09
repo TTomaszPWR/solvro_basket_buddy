@@ -26,7 +26,7 @@ class _ListScreenState extends State<ListScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pushNamed(context, '/add_item');
+          Navigator.pushNamed(context, '/add_item', arguments: listIndex);
         },
         backgroundColor: Colors.grey[700],
         child: const Icon(Icons.add),

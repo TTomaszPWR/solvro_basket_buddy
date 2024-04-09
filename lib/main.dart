@@ -9,7 +9,7 @@ import 'package:solvro_basket_buddy/product_category/repo/product_category_repos
 import 'package:solvro_basket_buddy/products/bloc/product_bloc.dart';
 import 'package:solvro_basket_buddy/products/repo/product_repository.dart';
 import 'package:solvro_basket_buddy/shopping_lists/bloc/shopping_lists_bloc.dart';
-import 'package:solvro_basket_buddy/shopping_lists/pages/add_item_screen.dart';
+import 'package:solvro_basket_buddy/shopping_lists/pages/search_item_screen.dart';
 import 'package:solvro_basket_buddy/shopping_lists/pages/add_list_screen.dart';
 import 'package:solvro_basket_buddy/shopping_lists/pages/home_screen.dart';
 import 'package:solvro_basket_buddy/shopping_lists/pages/list_screen.dart';
@@ -75,7 +75,7 @@ class MyApp extends StatelessWidget {
             '/home': (context) => const Home(),
             '/add_list': (context) => const AddListScreen(),
             '/list':(context) => const ListScreen(),
-            '/add_item':(context) => const AddItemScreen(),
+            '/add_item':(context) => const SearchItemScreen(),
           },
         ),
       ),

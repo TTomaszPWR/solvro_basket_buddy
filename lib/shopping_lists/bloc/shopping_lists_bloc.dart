@@ -32,9 +32,14 @@ class ShoppingListsBloc extends Bloc<ShoppingListsEvent, ShoppingListsState> {
       final shoppingLists = List<ShoppingListModel>.from((state as ShoppingListsLoaded).shoppingLists);
 
       emit(ShoppingListsLoading());
-      shoppingLists.add(await _shoppingListsRepository.addList(event.token, event.name, event.color, event.emoji));
+      try{
+        shoppingLists.add(await _shoppingListsRepository.addList(event.token, event.name, event.color, event.emoji));
 
-      emit(ShoppingListsLoaded(shoppingLists));
+        emit(ShoppingListsLoaded(shoppingLists));
+      }catch(e){
+        emit(ShoppingListsLoadingError(e.toString()));
+        emit(ShoppingListsLoaded(shoppingLists));
+      }
 
     });
 
@@ -42,38 +47,64 @@ class ShoppingListsBloc extends Bloc<ShoppingListsEvent, ShoppingListsState> {
       final shoppingLists = List<ShoppingListModel>.from((state as ShoppingListsLoaded).shoppingLists);
 
       emit(ShoppingListsLoading());
-      await _shoppingListsRepository.deleteList(event.token, event.listId);
+      try{
+        await _shoppingListsRepository.deleteList(event.token, event.listId);
 
-      shoppingLists.removeWhere((element) => element.id == event.listId);
+        shoppingLists.removeWhere((element) => element.id == event.listId);
 
-      emit(ShoppingListsLoaded(shoppingLists));
+        emit(ShoppingListsLoaded(shoppingLists));
+      }catch(e){
+        emit(ShoppingListsLoadingError(e.toString()));
+        emit(ShoppingListsLoaded(shoppingLists));
+      }
     });
 
     on<UpdateShoppingList>((event, emit) async {
       final shoppingLists = List<ShoppingListModel>.from((state as ShoppingListsLoaded).shoppingLists);
 
       emit(ShoppingListsLoading());
-      await _shoppingListsRepository.updateList(event.token, event.listId, event.name, event.color, event.emoji, event.isActive);
+      try{
+        await _shoppingListsRepository.updateList(event.token, event.listId, event.name, event.color, event.emoji, event.isActive);
 
-      shoppingLists.firstWhere((element) => element.id == event.listId).name = event.name;
-      shoppingLists.firstWhere((element) => element.id == event.listId).color = event.color;
-      shoppingLists.firstWhere((element) => element.id == event.listId).emoji = event.emoji;
-      shoppingLists.firstWhere((element) => element.id == event.listId).isActive = event.isActive;
+        shoppingLists.firstWhere((element) => element.id == event.listId).name = event.name;
+        shoppingLists.firstWhere((element) => element.id == event.listId).color = event.color;
+        shoppingLists.firstWhere((element) => element.id == event.listId).emoji = event.emoji;
+        shoppingLists.firstWhere((element) => element.id == event.listId).isActive = event.isActive;
 
-      emit(ShoppingListsLoaded(shoppingLists));
+        emit(ShoppingListsLoaded(shoppingLists));
+      }catch(e){
+        emit(ShoppingListsLoadingError(e.toString()));
+        emit(ShoppingListsLoaded(shoppingLists));
+      }
     });
 
     on<UpdateShoppingItem>((event, emit) async {
       final shoppingLists = List<ShoppingListModel>.from((state as ShoppingListsLoaded).shoppingLists);
 
       emit(ShoppingListsLoading());
-      await _shoppingListsRepository.updateItem(event.token, event.listId, event.itemId, event.productId, event.quantity, event.unit, event.isBought);
+      try{
+        await _shoppingListsRepository.updateItem(event.token, event.listId, event.itemId, event.productId, event.quantity, event.unit, event.isBought);
+        shoppingLists.firstWhere((element) => element.id == event.listId).items.firstWhere((element) => element.id == event.itemId).isBought = event.isBought;
+        emit(ShoppingListsLoaded(shoppingLists));
+      }catch(e){
+        emit(ShoppingItemError(e.toString()));
+        emit(ShoppingListsLoaded(shoppingLists));
+      }
 
-      shoppingLists.firstWhere((element) => element.id == event.listId).items.firstWhere((element) => element.id == event.itemId).isBought = event.isBought;
+    });
 
+    on<AddShoppingItem>((event, emit) async {
+      final shoppingLists = List<ShoppingListModel>.from((state as ShoppingListsLoaded).shoppingLists);
 
-      emit(ShoppingListsLoaded(shoppingLists));
+      emit(ShoppingListsLoading());
+      try{
+        shoppingLists.firstWhere((element) => element.id == event.listId).items.add(await _shoppingListsRepository.addItem(event.token, event.listId, event.productId, event.quantity, event.unit));
 
+        emit(ShoppingListsLoaded(shoppingLists));
+      }catch(e){
+        emit(ShoppingItemError(e.toString()));
+        emit(ShoppingListsLoaded(shoppingLists));
+      }
     });
   }
 }

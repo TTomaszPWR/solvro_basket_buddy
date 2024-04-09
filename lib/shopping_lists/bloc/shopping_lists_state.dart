@@ -30,3 +30,12 @@ class ShoppingListsLoadingError extends ShoppingListsState {
 }
 
 class ShoppingListsNotLoaded extends ShoppingListsState {}
+
+class ShoppingItemError extends ShoppingListsState {
+  final String message;
+
+  const ShoppingItemError(this.message);
+
+  @override
+  List<Object> get props => [message];
+}

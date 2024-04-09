@@ -8,35 +8,38 @@ import 'package:solvro_basket_buddy/auth/components/auth_button.dart';
       backgroundColor: Colors.grey[300],
       context: context,
       builder: (context) {
-        return Wrap(
-          children: [Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 20),
-            child: Column(
-              children: [
-                Text(
-                  title,
-                  style: TextStyle(
-                    fontSize: 25,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.grey[800]
+        return Padding(
+          padding: MediaQuery.of(context).viewInsets,
+          child: Wrap(
+            children: [Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 20),
+              child: Column(
+                children: [
+                  Text(
+                    title,
+                    style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.grey[800]
+                    ),
                   ),
-                ),
-                const SizedBox(height: 20,),
-
-                widget,
-
-                const SizedBox(height: 20,),
-
-                AuthButton(
-                  text: 'Zapisz',
-                  onTap:() {
-                    Navigator.pop(context);
-                    onTap();
-                  }
-                ),
-              ],
-            ),
-          ),]
+                  const SizedBox(height: 20,),
+          
+                  widget,
+          
+                  const SizedBox(height: 20,),
+          
+                  AuthButton(
+                    text: 'Zapisz',
+                    onTap:() {
+                      Navigator.pop(context);
+                      onTap();
+                    }
+                  ),
+                ],
+              ),
+            ),]
+          ),
         );
       },
     );

@@ -68,3 +68,16 @@ class UpdateShoppingItem extends ShoppingListsEvent {
   List<Object> get props => [token, listId, itemId, isBought, productId, quantity, unit];
 }
 
+class AddShoppingItem extends ShoppingListsEvent {
+  final TokenModel token;
+  final int listId;
+  final int productId;
+  final double quantity;
+  final Unit unit;
+
+  const AddShoppingItem(this.token, this.listId, this.productId, this.quantity, this.unit);
+
+  @override
+  List<Object> get props => [token, listId, productId, quantity, unit];
+}
+
