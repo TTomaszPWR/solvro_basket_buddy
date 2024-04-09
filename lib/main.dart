@@ -67,7 +67,7 @@ class MyApp extends StatelessWidget {
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
-          title: 'Flutter Demo',
+          title: 'Solvro Basket Buddy',
           initialRoute: '/login',
           routes: {
             '/login': (context) => const LoginScreen(),
