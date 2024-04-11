@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:solvro_basket_buddy/auth/bloc/auth_bloc.dart';
-import 'package:solvro_basket_buddy/auth/model/token_model.dart';
 import 'package:solvro_basket_buddy/shopping_lists/bloc/shopping_lists_bloc.dart';
+import 'package:solvro_basket_buddy/shopping_lists/components/add_floating_action_button.dart';
 import 'package:solvro_basket_buddy/shopping_lists/components/home_screen_app_bar.dart';
 import 'package:solvro_basket_buddy/shopping_lists/components/shopping_list_tile.dart';
 
@@ -17,9 +17,6 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    final ShoppingListsBloc shoppingListsBloc = BlocProvider.of<ShoppingListsBloc>(context);
-    final AuthBloc authBloc = BlocProvider.of<AuthBloc>(context);
-
     return PopScope(
       canPop: false,
       child: Scaffold(
@@ -28,12 +25,8 @@ class _HomeState extends State<Home> {
           child: HomeScreenAppBar(),
         ),
 
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.pushNamed(context, '/add_list');
-          },
-          backgroundColor: Colors.grey[700],
-          child: const Icon(Icons.add),
+        floatingActionButton: AddFloatingActionButton(
+          onPressed: () => Navigator.pushNamed(context, '/add_list'),
         ),
 
         backgroundColor: Colors.grey[300],

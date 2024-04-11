@@ -12,6 +12,7 @@ sealed class ShoppingListsState extends Equatable {
 class ShoppingListsLoading extends ShoppingListsState {}
 
 class ShoppingListsLoaded extends ShoppingListsState {
+  @override
   final List<ShoppingListModel> shoppingLists;
 
   const ShoppingListsLoaded(this.shoppingLists);
@@ -38,4 +39,14 @@ class ShoppingItemError extends ShoppingListsState {
 
   @override
   List<Object> get props => [message];
+}
+
+class ShoppingItemRefreshing extends ShoppingListsState {
+  @override
+  final List<ShoppingListModel> shoppingLists;
+
+  const ShoppingItemRefreshing(this.shoppingLists);
+
+  @override
+  List<Object> get props => [shoppingLists];
 }

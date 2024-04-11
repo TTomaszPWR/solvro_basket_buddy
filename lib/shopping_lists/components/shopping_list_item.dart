@@ -21,7 +21,9 @@ class _ShoppingListItemState extends State<ShoppingListItem> {
 
   void toggleBought(ShoppingListModel list, ShoppingItemModel item, ShoppingListsBloc shoppingbloc, AuthBloc authBloc) {
     setState(() {
-      shoppingbloc.add(UpdateShoppingItem((authBloc.state as LoggedIn).token, list.id, item.id, !item.isBought,  item.product.id, item.quantity, item.unit));
+      if(shoppingbloc.state is ShoppingListsLoaded) {
+        shoppingbloc.add(UpdateShoppingItem((authBloc.state as LoggedIn).token, list.id, item.id, !item.isBought,  item.product.id, item.quantity, item.unit));
+      }
     });
   }
 
@@ -37,18 +39,30 @@ class _ShoppingListItemState extends State<ShoppingListItem> {
     final ShoppingListModel shoppingList = list[listIndex];
     final item = shoppingList.items[itemIndex];
 
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 0),
-      child: ListTile(
-        leading: IconButton(
-          icon: Icon(
+      child: GestureDetector(
+        onTap: () => toggleBought(shoppingList, item, shoppingbloc, authBloc),
+        child: ListTile(
+          trailing: Image.asset('assets/images/${item.product.category.id}_product_category.png'),
+          leading: Icon(
             item.isBought ? Icons.check_circle : Icons.circle_outlined,
             color: item.isBought ? Colors.green : Colors.grey
           ),
-          onPressed: () => toggleBought(shoppingList, item, shoppingbloc, authBloc),
+          title: Text(item.product.name),
+          subtitle: Text('${item.quantity % 1 == 0 ? item.quantity.toInt() : item.quantity} ${item.unit.toShortString()}'),
+          titleTextStyle: TextStyle(
+            decoration: item.isBought ? TextDecoration.lineThrough : null,
+            fontSize: 17,
+            color: item.isBought ? Colors.grey : Colors.black
+          ),
+          subtitleTextStyle: TextStyle(
+            decoration: item.isBought ? TextDecoration.lineThrough : null,
+            fontSize: 14,
+            color: item.isBought ? Colors.grey : Colors.black
+          )
         ),
-        title: Text(item.product.name),
-        subtitle: Text('${item.quantity % 1 == 0 ? item.quantity.toInt() : item.quantity} ${item.unit.toShortString()}'),
       ),
     );
   }

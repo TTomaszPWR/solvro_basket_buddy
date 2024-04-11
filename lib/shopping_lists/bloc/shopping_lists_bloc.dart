@@ -1,5 +1,4 @@
 
-import 'dart:math';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -17,6 +16,7 @@ class ShoppingListsBloc extends Bloc<ShoppingListsEvent, ShoppingListsState> {
   ShoppingListsBloc(this._shoppingListsRepository) : super(ShoppingListsNotLoaded()) {
 
     on<FetchShoppingLists>((event, emit) async {
+
       emit(ShoppingListsLoading());
       try {
         final shoppingLists = await _shoppingListsRepository.fetch(event.token);
@@ -80,7 +80,7 @@ class ShoppingListsBloc extends Bloc<ShoppingListsEvent, ShoppingListsState> {
     on<UpdateShoppingItem>((event, emit) async {
       final shoppingLists = List<ShoppingListModel>.from((state as ShoppingListsLoaded).shoppingLists);
 
-      emit(ShoppingListsLoading());
+      emit(ShoppingItemRefreshing(shoppingLists));
       try{
         await _shoppingListsRepository.updateItem(event.token, event.listId, event.itemId, event.productId, event.quantity, event.unit, event.isBought);
         shoppingLists.firstWhere((element) => element.id == event.listId).items.firstWhere((element) => element.id == event.itemId).isBought = event.isBought;

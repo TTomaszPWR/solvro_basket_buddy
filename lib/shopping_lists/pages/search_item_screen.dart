@@ -152,11 +152,11 @@ class _SearchItemScreenState extends State<SearchItemScreen> {
                     separatorBuilder: (context, index) => const Divider(),
                     itemBuilder: (context, index) {
                       final ProductModel product = _foundProducts[index];
-
                       return ListTile(
                         title: Text(product.name),
                         subtitle: Text(product.category.name),
-                        onTap:() => _addProductToList(listIndex, product.id, product.name, authBloc, shoppingListsBloc)
+                        onTap:() => _addProductToList(listIndex, product.id, product.name, authBloc, shoppingListsBloc),
+                        trailing: Image.asset('assets/images/${product.category.id}_product_category.png'),
                       );
                     }
                   ),
