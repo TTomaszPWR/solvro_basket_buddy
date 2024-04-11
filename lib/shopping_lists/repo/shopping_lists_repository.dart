@@ -10,12 +10,14 @@ import 'package:solvro_basket_buddy/shopping_lists/model/unitEnum.dart';
 class ShoppingListsRepository {
   var client = http.Client();
 
-  var headers = {
-    'Content-Type': 'application/json'
-  };
+  
 
   Future<http.Response> _sendGetRequest(String path, TokenModel token) async {
     var url = Uri.parse('$baseUrl$path');
+
+    var headers = {
+      'Authorization': 'Token ${token.token}'
+    };
 
     return await client.get(url, headers: headers);
   }
@@ -61,7 +63,12 @@ class ShoppingListsRepository {
   Future<void> deleteItem(TokenModel token, int listId, int itemId) async {
     var url = Uri.parse('${baseUrl}shopping-lists/$listId/items/$itemId/');
 
+    var headers = {
+      'Authorization': 'Token ${token.token}'
+    };
+
     var response = await client.delete(url, headers: headers);
+    
     if(response.statusCode >= 200 && response.statusCode < 300){
       return;
     }else{
@@ -71,6 +78,10 @@ class ShoppingListsRepository {
 
   Future<ShoppingListModel> addList(TokenModel token, String name, String color, String emoji) async {
     var url = Uri.parse('${baseUrl}shopping-lists/');
+
+    var headers = {
+      'Authorization': 'Token ${token.token}'
+    };
 
     var body = {
       "name": name,
@@ -88,6 +99,10 @@ class ShoppingListsRepository {
 
   Future<ShoppingListModel> updateList(TokenModel token, int listId, String name, String color, String emoji, bool isActive) async {
     var url = Uri.parse('${baseUrl}shopping-lists/$listId/');
+
+    var headers = {
+      'Authorization': 'Token ${token.token}'
+    };
 
     var body = {
       "name": name,
@@ -107,6 +122,10 @@ class ShoppingListsRepository {
   Future<ShoppingItemModel> updateItem(TokenModel token, int listId, int itemId,int productId,double quantity,Unit unit, bool isBought) async {
     var url = Uri.parse('${baseUrl}shopping-lists/$listId/items/$itemId/');
 
+    var headers = {
+      'Authorization': 'Token ${token.token}'
+    };
+
     var body = {
       "product_id": productId.toString(),
       "quantity": quantity.toString(),
@@ -124,6 +143,10 @@ class ShoppingListsRepository {
 
   Future<ShoppingItemModel> addItem(TokenModel token, int listId, int productId, double quantity, Unit unit) async {
     var url = Uri.parse('${baseUrl}shopping-lists/$listId/items/');
+
+    var headers = {
+      'Authorization': 'Token ${token.token}'
+    };
 
     var body = {
       "product_id": productId.toString(),
