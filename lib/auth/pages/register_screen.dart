@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:solvro_basket_buddy/auth/bloc/auth_bloc.dart';
-import 'package:solvro_basket_buddy/auth/components/auth_button.dart';
-import 'package:solvro_basket_buddy/auth/components/auth_text_field.dart';
+import 'package:solvro_basket_buddy/components/my_button.dart';
+import 'package:solvro_basket_buddy/components/my_text_field.dart';
+import 'package:solvro_basket_buddy/auth/components/bottom_auth_row.dart';
 import 'package:solvro_basket_buddy/auth/components/password_text_field.dart';
 import 'package:solvro_basket_buddy/products/bloc/product_bloc.dart';
 import 'package:solvro_basket_buddy/shopping_lists/bloc/shopping_lists_bloc.dart';
@@ -113,7 +114,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   
                   const SizedBox(height: 15),
             
-                  AuthTextField(
+                  MyTextField(
                     hintText: 'Email',
                     controller: emailController,
                   ),
@@ -134,34 +135,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
             
                   const SizedBox(height: 35),
             
-                  AuthButton(
+                  MyButton(
                     text: "Register now",
                     onTap:() => register(context, authBloc),
                   ),
             
                   const SizedBox(height: 7),
-            
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Do you have an account?",
-                        style: TextStyle(
-                          color: Colors.grey.shade600,
-                        ),
-                      ),
-                      const SizedBox(width: 5),
-                      GestureDetector(
-                        onTap: () => Navigator.pop(context),
-                        child: const Text(
-                          "Sign in now",
-                          style: TextStyle(
-                            color: Colors.blue,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ],
+
+                  BottomAuthRow(
+                    text: "Do you have an account?", 
+                    buttonText: "Sign in now", 
+                    onTap:() => Navigator.pop(context),
                   )
                 ],
               )

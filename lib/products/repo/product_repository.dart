@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:solvro_basket_buddy/api/base_client.dart';
+import 'package:solvro_basket_buddy/api/base_url.dart';
 import 'package:solvro_basket_buddy/auth/model/token_model.dart';
 import 'package:solvro_basket_buddy/products/model/product_model.dart';
 

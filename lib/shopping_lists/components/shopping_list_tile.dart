@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:solvro_basket_buddy/auth/bloc/auth_bloc.dart';
-import 'package:solvro_basket_buddy/auth/components/auth_text_field.dart';
+import 'package:solvro_basket_buddy/components/my_text_field.dart';
 import 'package:solvro_basket_buddy/auth/model/token_model.dart';
 import 'package:solvro_basket_buddy/shopping_lists/bloc/shopping_lists_bloc.dart';
 import 'package:solvro_basket_buddy/shopping_lists/components/change_bottom_sheet.dart';
@@ -85,7 +85,7 @@ class ShoppingListTile extends StatelessWidget {
     changeBottomSheet(
       context,
       'Zmień nazwę listy',
-      AuthTextField(hintText: 'Wprowadź nazwę listy', controller: changeNameController),
+      MyTextField(hintText: 'Wprowadź nazwę listy', controller: changeNameController),
       () {
         final list = shoppingListsBloc.state.shoppingLists[index];
         shoppingListsBloc.add(UpdateShoppingList(

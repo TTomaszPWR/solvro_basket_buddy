@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:solvro_basket_buddy/auth/bloc/auth_bloc.dart';
 import 'package:solvro_basket_buddy/auth/model/token_model.dart';
 import 'package:solvro_basket_buddy/shopping_lists/bloc/shopping_lists_bloc.dart';
+import 'package:solvro_basket_buddy/shopping_lists/components/home_screen_app_bar.dart';
 import 'package:solvro_basket_buddy/shopping_lists/components/shopping_list_tile.dart';
 
 class Home extends StatefulWidget {
@@ -14,12 +15,6 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
 
-
-  void _logout(){
-    BlocProvider.of<AuthBloc>(context).add(LogoutEvent(BlocProvider.of<AuthBloc>(context).state.props[0] as TokenModel));
-    Navigator.pushNamed(context, '/login');
-  }
-  
   @override
   Widget build(BuildContext context) {
     final ShoppingListsBloc shoppingListsBloc = BlocProvider.of<ShoppingListsBloc>(context);
@@ -28,27 +23,9 @@ class _HomeState extends State<Home> {
     return PopScope(
       canPop: false,
       child: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            'Moje listy',
-            style: TextStyle(
-              color: Colors.grey[700],
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
-            )
-          ),
-          automaticallyImplyLeading: false,
-          actions: [
-            IconButton(
-              onPressed: (){},
-              icon: const Icon(Icons.delete_forever)
-            ),
-            IconButton(
-              icon: const Icon(Icons.logout),
-              onPressed: _logout,
-            ),
-          ],
-          backgroundColor: Colors.grey[300],
+        appBar: const PreferredSize(
+          preferredSize: Size.fromHeight(kToolbarHeight),
+          child: HomeScreenAppBar(),
         ),
 
         floatingActionButton: FloatingActionButton(

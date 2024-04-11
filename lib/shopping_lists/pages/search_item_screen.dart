@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:solvro_basket_buddy/auth/bloc/auth_bloc.dart';
-import 'package:solvro_basket_buddy/auth/components/auth_button.dart';
-import 'package:solvro_basket_buddy/auth/components/auth_text_field.dart';
+import 'package:solvro_basket_buddy/components/my_button.dart';
+import 'package:solvro_basket_buddy/components/my_text_field.dart';
 import 'package:solvro_basket_buddy/auth/model/token_model.dart';
 import 'package:solvro_basket_buddy/products/bloc/product_bloc.dart';
 import 'package:solvro_basket_buddy/products/model/product_model.dart';
@@ -93,7 +93,7 @@ class _SearchItemScreenState extends State<SearchItemScreen> {
           
                   const SizedBox(height: 20,),
           
-                  AuthTextField(controller: addController, hintText: 'Ilość',),
+                  MyTextField(controller: addController, hintText: 'Ilość',),
           
                   const SizedBox(height: 20,),
           
@@ -102,7 +102,7 @@ class _SearchItemScreenState extends State<SearchItemScreen> {
                   const SizedBox(height: 20,),
           
           
-                  AuthButton(
+                  MyButton(
                     text: 'Dodaj',
                     onTap:() => _addProductToListOnTap(listIndex, productId, productName, authBloc, shoppingListsBloc)
                   ),

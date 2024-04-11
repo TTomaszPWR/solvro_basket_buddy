@@ -2,11 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:solvro_basket_buddy/auth/bloc/auth_bloc.dart';
-import 'package:solvro_basket_buddy/auth/components/auth_button.dart';
-import 'package:solvro_basket_buddy/auth/components/auth_text_field.dart';
+import 'package:solvro_basket_buddy/components/my_button.dart';
+import 'package:solvro_basket_buddy/components/my_text_field.dart';
 import 'package:solvro_basket_buddy/auth/model/token_model.dart';
 import 'package:solvro_basket_buddy/shopping_lists/bloc/shopping_lists_bloc.dart';
 import 'package:solvro_basket_buddy/shopping_lists/components/color_buttons.dart';
+import 'package:solvro_basket_buddy/shopping_lists/exceptions/no_color_exception.dart';
 
 class AddListScreen extends StatefulWidget {
   const AddListScreen({super.key});
@@ -31,7 +32,7 @@ class _AddListScreenState extends State<AddListScreen> {
         }
       }
     }
-    throw Error();
+    throw NoColorException('Nie wybrano koloru');
   }
 
   void onTap() {
@@ -73,7 +74,7 @@ class _AddListScreenState extends State<AddListScreen> {
                   
                   const SizedBox(height: 25),
 
-                  AuthTextField(
+                  MyTextField(
                     hintText: 'List name',
                     controller: controller,
                   ),
@@ -84,7 +85,7 @@ class _AddListScreenState extends State<AddListScreen> {
                 ]
               )
             ),
-            AuthButton(onTap: onTap, text: 'Dodaj listę',)
+            MyButton(onTap: onTap, text: 'Dodaj listę',)
           ],
         ),
       )

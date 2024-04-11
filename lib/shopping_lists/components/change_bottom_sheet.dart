@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:solvro_basket_buddy/auth/components/auth_button.dart';
+import 'package:solvro_basket_buddy/components/my_button.dart';
 
   void changeBottomSheet(BuildContext context, String title, Widget widget, Function() onTap) {
     
@@ -29,7 +29,7 @@ import 'package:solvro_basket_buddy/auth/components/auth_button.dart';
           
                   const SizedBox(height: 20,),
           
-                  AuthButton(
+                  MyButton(
                     text: 'Zapisz',
                     onTap:() {
                       Navigator.pop(context);
