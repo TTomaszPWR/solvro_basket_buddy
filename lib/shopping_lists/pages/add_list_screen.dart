@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:solvro_basket_buddy/auth/bloc/auth_bloc.dart';
@@ -36,6 +35,8 @@ class _AddListScreenState extends State<AddListScreen> {
   }
 
   void onTap() {
+    if(controller.text.isEmpty) return;
+
     BlocProvider.of<ShoppingListsBloc>(context).add(AddShoppingList(
       BlocProvider.of<AuthBloc>(context).state.props[0] as TokenModel,
       controller.text,

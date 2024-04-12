@@ -9,7 +9,7 @@ import 'package:solvro_basket_buddy/products/model/product_model.dart';
 import 'package:solvro_basket_buddy/shopping_lists/bloc/shopping_lists_bloc.dart';
 import 'package:solvro_basket_buddy/shopping_lists/components/search_text_field.dart';
 import 'package:solvro_basket_buddy/shopping_lists/components/unit_buttons.dart';
-import 'package:solvro_basket_buddy/shopping_lists/model/unitEnum.dart';
+import 'package:solvro_basket_buddy/shopping_lists/model/unit.dart';
 
 class SearchItemScreen extends StatefulWidget {
   const SearchItemScreen({super.key});

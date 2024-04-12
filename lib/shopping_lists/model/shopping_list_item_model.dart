@@ -2,7 +2,7 @@
 import 'dart:convert';
 
 import 'package:solvro_basket_buddy/products/model/product_model.dart';
-import 'package:solvro_basket_buddy/shopping_lists/model/unitEnum.dart';
+import 'package:solvro_basket_buddy/shopping_lists/model/unit.dart';
 
 class ShoppingItemModel {
   int id;

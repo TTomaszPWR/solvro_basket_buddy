@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:solvro_basket_buddy/auth/bloc/auth_bloc.dart';
 import 'package:solvro_basket_buddy/shopping_lists/bloc/shopping_lists_bloc.dart';
 import 'package:solvro_basket_buddy/shopping_lists/components/add_floating_action_button.dart';
 import 'package:solvro_basket_buddy/shopping_lists/components/home_screen_app_bar.dart';

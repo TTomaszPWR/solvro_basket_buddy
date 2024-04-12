@@ -4,7 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:solvro_basket_buddy/auth/model/token_model.dart';
 import 'package:solvro_basket_buddy/shopping_lists/model/shopping_list_model.dart';
-import 'package:solvro_basket_buddy/shopping_lists/model/unitEnum.dart';
+import 'package:solvro_basket_buddy/shopping_lists/model/unit.dart';
 import 'package:solvro_basket_buddy/shopping_lists/repo/shopping_lists_repository.dart';
 
 part 'shopping_lists_event.dart';
