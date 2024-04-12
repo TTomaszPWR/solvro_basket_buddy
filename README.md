@@ -1,6 +1,6 @@
 # solvro_basket_buddy
 
-A new Flutter project.
+Projekt na rekrutacje KN Solvro.
 
 ## Getting Started
 
