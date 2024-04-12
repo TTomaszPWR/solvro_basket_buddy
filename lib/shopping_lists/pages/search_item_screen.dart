@@ -50,15 +50,17 @@ class _SearchItemScreenState extends State<SearchItemScreen> {
   }
 
   void _addProductToListOnTap(int listIndex, int productId, String productName, AuthBloc authBloc, ShoppingListsBloc shoppingListsBloc){
-    if(addController.text.isNotEmpty && addController.text != '0' && double.tryParse(addController.text) != null){
-      Navigator.pop(context);
-      shoppingListsBloc.add(AddShoppingItem(
-        authBloc.state.props[0] as TokenModel,
-        shoppingListsBloc.state.shoppingLists[listIndex].id,
-        productId,
-        double.parse(addController.text),
-        Unit.values[selections.indexOf(true)]
-      ));
+    if(addController.text.isNotEmpty && double.tryParse(addController.text) != null){
+      if(double.parse(addController.text) > 0){
+        Navigator.pop(context);
+        shoppingListsBloc.add(AddShoppingItem(
+          authBloc.state.props[0] as TokenModel,
+          shoppingListsBloc.state.shoppingLists[listIndex].id,
+          productId,
+          double.parse(addController.text),
+          Unit.values[selections.indexOf(true)]
+        ));
+      }
     }else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
