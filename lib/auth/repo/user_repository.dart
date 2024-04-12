@@ -30,11 +30,7 @@ class UserRepository{
       'email': email,
       'password': password
     };
-    var headers = {
-      'Content-Type': 'application/json'
-    };
-
-    var response = await client.post(url, headers: headers, body: body);
+    var response = await client.post(url, body: body);
     if(response.statusCode >= 200 && response.statusCode < 300){
       var token = TokenModel.fromJson(json.decode(utf8.decode(response.bodyBytes)));
       print(token.toString());
@@ -47,7 +43,6 @@ class UserRepository{
   Future<void> logout(TokenModel token) async {
     var url = Uri.parse('${baseUrl}auth/logout/');
     var headers = {
-      'Content-Type': 'application/json',
       'Authorization': 'Token ${token.token}'
     };
     var response = await client.post(url, headers: headers);

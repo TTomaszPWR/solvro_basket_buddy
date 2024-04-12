@@ -36,13 +36,17 @@ class _HomeState extends State<Home> {
               if (state is ShoppingListsLoading) {
                 return const CircularProgressIndicator();
               }else if (state is ShoppingListsLoaded){
-                return ListView.builder(
-                  padding: const EdgeInsets.only(bottom: 100),
-                  itemCount: state.shoppingLists.length,
-                  itemBuilder: (context, index) {
-                    return ShoppingListTile(index: index);
-                  },
-                );
+                if (state.shoppingLists.isEmpty) {
+                  return const Text('Brak list zakupów');
+                }else{
+                  return ListView.builder(
+                    padding: const EdgeInsets.only(bottom: 100),
+                    itemCount: state.shoppingLists.length,
+                    itemBuilder: (context, index) {
+                      return ShoppingListTile(index: index);
+                    },
+                  );
+                }
               }else if (state is ShoppingListsLoadingError){
                 return const Text('Wystąpił błąd podczas ładowania listy zakupów');
               }else {
