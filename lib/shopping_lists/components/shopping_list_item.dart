@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:solvro_basket_buddy/auth/bloc/auth_bloc.dart';
 import 'package:solvro_basket_buddy/shopping_lists/bloc/shopping_lists_bloc.dart';
 import 'package:solvro_basket_buddy/shopping_lists/model/shopping_list_item_model.dart';
@@ -27,6 +28,12 @@ class _ShoppingListItemState extends State<ShoppingListItem> {
     });
   }
 
+  void _onDismissed(AuthBloc authBloc, ShoppingListsBloc shoppingbloc, ShoppingListModel shoppingList, ShoppingItemModel item) {
+    if(shoppingbloc.state is ShoppingListsLoaded) {
+      shoppingbloc.add(DeleteShoppingItem((authBloc.state as LoggedIn).token, shoppingList.id, item.id));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final listIndex = widget.listIndex;
@@ -40,10 +47,21 @@ class _ShoppingListItemState extends State<ShoppingListItem> {
     final item = shoppingList.items[itemIndex];
 
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 0),
-      child: GestureDetector(
-        onTap: () => toggleBought(shoppingList, item, shoppingbloc, authBloc),
+    return GestureDetector(
+      onTap: () => toggleBought(shoppingList, item, shoppingbloc, authBloc),
+      child: Slidable(
+        startActionPane: ActionPane(
+          extentRatio: 0.25,
+          motion: const StretchMotion(),
+          children: [
+              SlidableAction(
+                backgroundColor: Colors.red,
+                icon: Icons.delete,
+                label: 'Usuń',
+                onPressed: (context) => _onDismissed(authBloc, shoppingbloc, shoppingList, item),
+              ),
+            ],
+        ),
         child: ListTile(
           trailing: Image.asset('assets/images/${item.product.category.id}_product_category.png'),
           leading: Icon(
@@ -66,4 +84,5 @@ class _ShoppingListItemState extends State<ShoppingListItem> {
       ),
     );
   }
+  
 }

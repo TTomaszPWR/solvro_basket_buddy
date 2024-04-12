@@ -105,5 +105,21 @@ class ShoppingListsBloc extends Bloc<ShoppingListsEvent, ShoppingListsState> {
         emit(ShoppingListsLoaded(shoppingLists));
       }
     });
+
+    on<DeleteShoppingItem>((event, emit) async {
+      final shoppingLists = List<ShoppingListModel>.from((state as ShoppingListsLoaded).shoppingLists);
+
+      emit(ShoppingItemRefreshing(shoppingLists));
+      try{
+        await _shoppingListsRepository.deleteItem(event.token, event.listId, event.itemId);
+
+        shoppingLists.firstWhere((element) => element.id == event.listId).items.removeWhere((element) => element.id == event.itemId);
+
+        emit(ShoppingListsLoaded(shoppingLists));
+      }catch(e){
+        emit(ShoppingItemError(e.toString()));
+        emit(ShoppingListsLoaded(shoppingLists));
+      }
+    });
   }
 }

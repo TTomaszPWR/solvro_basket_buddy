@@ -163,6 +163,22 @@ class ShoppingListsRepository {
     }
   }
 
+  Future<void> deleteItemFromList(TokenModel token, int listId, int itemId) async {
+    var url = Uri.parse('${baseUrl}shopping-lists/$listId/items/$itemId/');
+
+    var headers = {
+      'Authorization': 'Token ${token.token}'
+    };
+
+    var response = await client.delete(url, headers: headers);
+
+    if(response.statusCode >= 200 && response.statusCode < 300){
+      return;
+    }else{
+      throw http.ClientException('Failed to delete item');
+    }
+  }
+
   void dispose() {
     client.close();
   }

@@ -81,3 +81,14 @@ class AddShoppingItem extends ShoppingListsEvent {
   List<Object> get props => [token, listId, productId, quantity, unit];
 }
 
+class DeleteShoppingItem extends ShoppingListsEvent {
+  final TokenModel token;
+  final int listId;
+  final int itemId;
+
+  const DeleteShoppingItem(this.token, this.listId, this.itemId);
+
+  @override
+  List<Object> get props => [token, listId, itemId];
+}
+
