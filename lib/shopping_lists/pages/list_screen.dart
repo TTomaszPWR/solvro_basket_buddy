@@ -31,14 +31,20 @@ class _ListScreenState extends State<ListScreen> {
       body: BlocBuilder<ShoppingListsBloc, ShoppingListsState>(
         builder: (context, state) {
           if (state is ShoppingListsLoaded || state is ShoppingItemRefreshing) {
-            return ListView.separated(
-              padding: const EdgeInsets.only(bottom: 100),
-              itemCount: state.shoppingLists[listIndex].items.length,
-              itemBuilder: (context, index) {
-                return ShoppingListItem(listIndex: listIndex, itemIndex: index);
-              },
-              separatorBuilder: (context, index) => const Divider(),
-            );
+            if (state.shoppingLists.isEmpty) {
+              return const Center(
+                child: Text('Twoja lista jest pusta'),
+              );
+            }else{
+              return ListView.separated(
+                padding: const EdgeInsets.only(bottom: 100),
+                itemCount: state.shoppingLists[listIndex].items.length,
+                itemBuilder: (context, index) {
+                  return ShoppingListItem(listIndex: listIndex, itemIndex: index);
+                },
+                separatorBuilder: (context, index) => const Divider(),
+              );
+            }
           }else{
             return const Center(
               child: Text('Error'),
