@@ -1,16 +1,10 @@
 # solvro_basket_buddy
+Link do rekrutacji: https://github.com/Solvro/rekrutacja.wiosna.2024
 
-Projekt na rekrutacje KN Solvro.
+Zadanie na rekrutacje KN Solvro. Jest to prosta mobilna aplikacja umożliwiająca zarządzanie listami zakupów, wykonanan we flutterze, zintegrowana z api udostępnionym przez KN Solvro.
+
+repo: https://github.com/TTomaszPWR/solvro_basket_buddy
+api url: https://basket-buddy-solvro-api.kowalinski.dev/api/v1/
+api docs: https://basket-buddy-solvro-api.kowalinski.dev/api/v1/docs
 
 ## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
