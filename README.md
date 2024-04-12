@@ -7,6 +7,6 @@ api url: https://basket-buddy-solvro-api.kowalinski.dev/api/v1/
 api docs: https://basket-buddy-solvro-api.kowalinski.dev/api/v1/docs
 
 ## Instalacja
-Aplikację można samemu skompilować na swoje urządzenie lub zainstalować android apk https://github.com/TTomaszPWR/solvro_mobile/releases/tag/v1.0.1
+Aplikację można samemu skompilować na swoje urządzenie lub zainstalować android apk https://github.com/TTomaszPWR/solvro_mobile/releases/tag/v1.0.2
 
 ## Przykładowe screeny
