@@ -60,6 +60,7 @@ class _SearchItemScreenState extends State<SearchItemScreen> {
           double.parse(addController.text),
           Unit.values[selections.indexOf(true)]
         ));
+        addController.clear();
       }
     }else {
       ScaffoldMessenger.of(context).showSnackBar(

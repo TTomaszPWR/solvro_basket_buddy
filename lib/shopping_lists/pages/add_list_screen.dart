@@ -45,6 +45,7 @@ class _AddListScreenState extends State<AddListScreen> {
       )
     );
     Navigator.pop(context);
+    controller.clear();
   }
 
   @override
