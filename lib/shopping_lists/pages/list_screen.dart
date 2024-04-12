@@ -32,6 +32,7 @@ class _ListScreenState extends State<ListScreen> {
         builder: (context, state) {
           if (state is ShoppingListsLoaded || state is ShoppingItemRefreshing) {
             return ListView.separated(
+              padding: const EdgeInsets.only(bottom: 100),
               itemCount: state.shoppingLists[listIndex].items.length,
               itemBuilder: (context, index) {
                 return ShoppingListItem(listIndex: listIndex, itemIndex: index);

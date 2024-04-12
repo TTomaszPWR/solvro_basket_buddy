@@ -37,6 +37,7 @@ class _HomeState extends State<Home> {
                 return const CircularProgressIndicator();
               }else if (state is ShoppingListsLoaded){
                 return ListView.builder(
+                  padding: const EdgeInsets.only(bottom: 100),
                   itemCount: state.shoppingLists.length,
                   itemBuilder: (context, index) {
                     return ShoppingListTile(index: index);
